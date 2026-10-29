@@ -1,6 +1,23 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Home() {
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
+    "idle"
+  );
+
+  async function handleSendEmail() {
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/send", { method: "POST" });
+      setStatus(res.ok ? "success" : "error");
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
@@ -62,6 +79,26 @@ export default function Home() {
           >
             Documentation
           </a>
+        </div>
+        <div className="flex flex-col items-center gap-2 sm:items-start">
+          <button
+            type="button"
+            onClick={handleSendEmail}
+            disabled={status === "loading"}
+            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 text-base font-medium transition-colors hover:border-transparent hover:bg-black/[.04] disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
+          >
+            {status === "loading" ? "Sending..." : "Send email"}
+          </button>
+          {status === "success" && (
+            <p className="text-sm text-green-600 dark:text-green-400">
+              Email sent successfully!
+            </p>
+          )}
+          {status === "error" && (
+            <p className="text-sm text-red-600 dark:text-red-400">
+              Failed to send email.
+            </p>
+          )}
         </div>
       </main>
     </div>
