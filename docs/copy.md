@@ -106,6 +106,10 @@ Errors:
 - No consent: Bez souhlasu vám průvodce nemůžeme poslat.
 - Server error: Něco se nepovedlo. Zkuste to prosím znovu za chvíli.
 
+States:
+- Sending (button label while the request runs): Posíláme…
+- Success (shown briefly before the redirect to `/dekujeme`): Hotovo. Průvodce vám posíláme na e-mail.
+
 ## 5. Social proof strip (mock, `isMock: true`)
 
 - **1 240** lidí si průvodce stáhlo
