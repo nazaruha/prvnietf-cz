@@ -1,6 +1,6 @@
 # Copy: `/soukromi` (Zásady ochrany osobních údajů)
 
-Fill in the `[…]` values before publishing. Lines marked **CHECK** must be verified against your actual account settings; don't publish a claim you haven't checked. `noindex`.
+Values filled in and checked on 30. 10. 2026: Neon region in Vercel → Storage (Frankfurt, `fra1`); Resend DPA §6.1–6.2 (primary processing in the US, EU SCCs; sending region Ireland); PostHog EU Cloud with "Discard client IP data" and cookieless tracking on. `noindex`.
 
 ---
 
@@ -9,7 +9,7 @@ Fill in the `[…]` values before publishing. Lines marked **CHECK** must be ver
 Platné od 30. 10. 2026.
 
 ### Kdo vaše údaje zpracovává
-Správcem je **Nazarii Fedun**, [IČO, pokud ho chcete uvést], kontakt: **[e-mail]**. Web prvnietf.cz je demo projekt vytvořený pro výběrové řízení.
+Správcem je **Nazarii Fedun**, kontakt: **fedunnazarii20122001@gmail.com**. Web prvnietf.cz je demo projekt vytvořený pro výběrové řízení.
 
 ### Jaké údaje a proč
 - **E-mailová adresa** z formuláře. Pošleme vám na ni průvodce „První 3 roky s ETF“ a, pokud jste souhlasili, občasné tipy k investování do ETF.
@@ -18,17 +18,17 @@ Správcem je **Nazarii Fedun**, [IČO, pokud ho chcete uvést], kontakt: **[e-ma
 Právním základem je **váš souhlas** (čl. 6 odst. 1 písm. a GDPR). Souhlas můžete kdykoli odvolat.
 
 ### Jak dlouho
-Do odvolání souhlasu, nejdéle **[2 roky]** od odeslání formuláře. Pak údaje smažeme.
+Do odvolání souhlasu, nejdéle **2 roky** od odeslání formuláře. Pak údaje smažeme.
 
 ### Kdo s údaji pracuje (zpracovatelé)
 - **Vercel Inc.**: hosting webu.
-- **Neon**: databáze, ve které je uložen váš e-mail. **CHECK:** region databáze ([uveďte region z nastavení projektu Neon]).
-- **Resend**: odesílání e-mailů. **CHECK:** kde Resend data zpracovává; pokud mimo EU, předání probíhá na základě standardních smluvních doložek.
+- **Neon**: databáze, ve které je uložen váš e-mail (Frankfurt, EU).
+- **Resend**: odesílání e-mailů. Resend zpracovává data převážně v USA; předání probíhá na základě standardních smluvních doložek.
 
 ### Analytika bez cookies
-Návštěvnost měříme nástrojem **PostHog (servery v EU, Frankfurt)** v režimu bez cookies. Do vašeho zařízení nic neukládáme, IP adresy se neukládají a váš e-mail se do analytiky nikdy neposílá. Vidíme jen anonymní souhrny, například kolik lidí odpovědělo na otázky nebo odeslalo formulář. **CHECK:** v PostHogu je zapnuto „Discard client IP data“.
+Návštěvnost měříme nástrojem **PostHog (servery v EU, Frankfurt)** v režimu bez cookies. Do vašeho zařízení nic neukládáme, IP adresy se neukládají a váš e-mail se do analytiky nikdy neposílá. Vidíme jen anonymní souhrny, například kolik lidí odpovědělo na otázky nebo odeslalo formulář.
 
 ### Vaše práva
-Máte právo na přístup k údajům, jejich opravu, výmaz, omezení zpracování, přenositelnost a právo vznést námitku. Stačí napsat na **[e-mail]**. Z e-mailů se odhlásíte **[odkazem v každém e-mailu / e-mailem na kontakt výše]**.
+Máte právo na přístup k údajům, jejich opravu, výmaz, omezení zpracování, přenositelnost a právo vznést námitku. Stačí napsat na **fedunnazarii20122001@gmail.com**. Z e-mailů se odhlásíte **odkazem v každém e-mailu**.
 
 Pokud máte za to, že údaje zpracováváme v rozporu s předpisy, můžete podat stížnost u **Úřadu pro ochranu osobních údajů** (www.uoou.cz).
