@@ -161,7 +161,7 @@ Link at the end: **Podrobně to máme v průvodci →** (scrolls to the form)
 
 - Heading: **Hotovo. Průvodce je váš.**
 - Button: **Stáhnout PDF** (opens in a new tab)
-- Text: Kopii jsme poslali na [e-mail]. Pokud nedorazí do pár minut, podívejte se do spamu.
+- No "copy sent to [e-mail]" line: the address must never be in the URL (PostHog records it), so the page doesn't know it.
 - Fund reminder: Váš fond: **[VWCE]** · ISIN [IE00BK5BQT80] – podle ISIN ho najdete u brokera.
 - Small link: ← Zpět na srovnání
 
@@ -185,3 +185,22 @@ Odhlásit se můžete jedním kliknutím: [Odhlásit]
 ```
 
 [Odhlásit] links to `/odhlasit` (signed token, unsubscribes via a button, plus `List-Unsubscribe` headers); see `docs/STATUS.md`. Don't ship the email before that page works.
+
+When the visitor saw no fund ("zatím ne" or a skipped picker), the "Fond, který jste si prohlédli" line is left out.
+
+## 11. Guide page `/prvni-3-roky-s-etf` (`noindex`)
+
+The [Stáhnout PDF] link in the email points here.
+
+- Cover image `/pdf-cover.png`, title: **První 3 roky s ETF**
+- Subline (the email's sentence, reused): V průvodci najdete, co čekat v prvních měsících, co dělat při poklesu, jak je to s daněmi a kdy dává smysl prodat.
+- Button: **Stáhnout PDF** (opens `/prvni-3-roky-s-etf.pdf` in a new tab, no automatic download)
+
+## 12. Unsubscribe page `/odhlasit` (`noindex`)
+
+- Heading: **Odhlásit se z e-mailů**
+- Text: Po odhlášení vám už nebudeme nic posílat.
+- Button: **Odhlásit se**
+- Done: Hotovo. Z e-mailů jste odhlášeni.
+- Invalid link: Tento odkaz pro odhlášení nefunguje. Použijte prosím odkaz z našeho posledního e-mailu.
+- Server error: Něco se nepovedlo. Zkuste to prosím znovu za chvíli.
