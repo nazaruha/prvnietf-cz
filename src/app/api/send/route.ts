@@ -1,9 +1,15 @@
 // app/api/send/route.ts
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST() {
+  // Created per request: at module level a missing key (e.g. in Preview) fails the build.
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error("RESEND_API_KEY is not set");
+    return Response.json({ error: "Email is not configured" }, { status: 500 });
+  }
+
+  const resend = new Resend(apiKey);
   const { data, error } = await resend.emails.send({
     from: "PrvniETF <noreply@mail.prvnietf.cz>",
     to: [
