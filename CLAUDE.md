@@ -2,6 +2,18 @@
 
 @AGENTS.md
 
+## Parallel agents (read first if you run in a worktree)
+
+Target user: a Czech retail investor, 25–45, on a phone, coming from an ad. They have heard of ETFs but don't know which to start with or what happens after buying (drops, dividends, taxes, currency).
+
+- **Edit only the folder(s) assigned to you** in your task prompt.
+- **Never edit (locked):** `CLAUDE.md`, `data/`, `src/data/` (data contract), `src/app/page.tsx`, `src/app/layout.tsx`, `src/app/globals.css` (design tokens), `src/components/Funnel/` (wiring), `src/lib/format.ts`, `src/lib/db.ts`, `prisma/schema.prisma`, `prisma.config.ts`, `next.config.ts`, `eslint.config.mjs`, `package.json`, `package-lock.json`. If you need a change there, **stop and tell the user** what you need and why.
+- **Don't install packages.**
+- All user-facing text is Czech, verbatim from `docs/copy.md` (or `src/data/etfs.ts`). Missing text → ask, never write it.
+- Numbers come from `src/data/etfs.ts` / `data/` and are formatted with `src/lib/format.ts`. Styling uses the tokens in `globals.css` (`bg-night`, `text-ink`, `bg-cta`, `bg-chip-*`, `px-gutter`, …).
+- **This overrides the session routine and `.claude/rules/commits.md` for you:** work on your own feature branch, make small Conventional Commits without waiting for approval, never squash. Still **never push** and never open PRs.
+- Before you finish: `npm run typecheck && npm run lint && npm test && npm run build` must pass. Fix your own errors; if the failure is in a file you don't own, report it instead.
+
 **Current state, open work and next steps: @docs/STATUS.md** (read it first; it is how sessions hand over to each other).
 
 Mobile lead-magnet landing page for Czech retail investors comparing NYSE ETFs with the European (UCITS) funds they can actually buy. Angle: **"what happens after you buy"**. Reviewer's test: *could we launch ads on it tomorrow?* Deadline **30. 10. 2026**.

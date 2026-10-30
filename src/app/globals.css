@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Design tokens (docs/design.md). Locked for the parallel agents: ask before changing.
+ * Neutrals are sampled from the ads in ads/ (ad-a-feed-4x5.png, ad-b-feed-4x5.png).
+ * Mobile first: base styles target 390 px, wider screens are the exception.
+ */
+@theme {
+  --font-sans: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+
+  /* Neutrals */
+  --color-night: #10191b; /* Ad A background: hero variant A */
+  --color-paper: #ffffff; /* Ad B base: everything below the hero, hero variant B */
+  --color-mist: #dadedf; /* Ad B wall: tinted sections, lines */
+  --color-ink: #14181f; /* Ad B headline: main text on light */
+  --color-ink-muted: #494c51; /* Small text: sources, dates, notes (8.6:1 on paper, 6.4:1 on mist) */
+
+  /* CTA: green pill, dark text (5.9:1). Only for the main action. */
+  --color-cta: #1db474;
+  --color-cta-ink: #06281a;
+
+  /*
+   * ETF chips: fund/ticker chips only, never decoration. White text only as large text
+   * (>= 24 px, or >= 18.7 px bold) and never on amber; use dark text on amber.
+   * Red is also Ad B's accent mark colour.
+   */
+  --color-chip-blue: #2f7de1;
+  --color-chip-red: #e0573f;
+  --color-chip-amber: #e0a526;
+  --color-chip-teal: #1f9e8f;
+  --color-chip-green: #3aa65c;
+  --color-chip-pink: #d14d8b;
+  --color-chip-indigo: #6a7bd8;
+
+  /* Spacing: 16 px side gutter at 390 px; tap targets at least 48 px high */
+  --spacing-gutter: 1rem;
+  --spacing-tap: 3rem;
+
+  /* Readable line length for body text on wide screens */
+  --container-prose: 36rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    /* Numbers line up in tables and cards */
+    font-variant-numeric: tabular-nums;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :focus-visible {
+    outline: 3px solid var(--color-chip-blue);
+    outline-offset: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

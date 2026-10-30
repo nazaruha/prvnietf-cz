@@ -1,0 +1,39 @@
+// Models from docs/project.md. The connection URLs live in prisma.config.ts (migrations)
+// and src/lib/db.ts (runtime, via the Neon adapter).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Lead {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  consent        Boolean
+  consentText    String
+  fund           String?
+  adVersion      String?
+  utmSource      String?
+  utmMedium      String?
+  utmCampaign    String?
+  utmContent     String?
+  // Set by /odhlasit, cleared when the same email submits the form again (DECISIONS.md D21).
+  unsubscribedAt DateTime?
+  createdAt      DateTime  @default(now())
+}
+
+model FundSnapshot {
+  ticker    String
+  field     String   // "price" | "ter"
+  value     Decimal
+  currency  String?  // "EUR" | "USD" for prices
+  asOf      DateTime // trading day / last_updated from the API
+  fetchedAt DateTime @default(now())
+  source    String   @default("Alpha Vantage")
+
+  @@id([ticker, field])
+}
