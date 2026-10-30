@@ -6,10 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test \"src/**/*.test.ts\""
   },
   "dependencies": {
     "next": "16.4.3",
+    "posthog-js": "^1.442.1",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "resend": "^6.35.0"
