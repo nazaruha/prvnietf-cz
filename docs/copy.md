@@ -204,3 +204,12 @@ The [Stáhnout PDF] link in the email points here.
 - Done: Hotovo. Z e-mailů jste odhlášeni.
 - Invalid link: Tento odkaz pro odhlášení nefunguje. Použijte prosím odkaz z našeho posledního e-mailu.
 - Server error: Něco se nepovedlo. Zkuste to prosím znovu za chvíli.
+
+## 13. Admin page `/admin` (`noindex`, Basic Auth)
+
+Internal page with the leads table, newest first. Approved by the user on 30. 10. 2026.
+
+- Title: **Leady**
+- Columns: Vytvořeno · E-mail · Fond · Verze reklamy · UTM zdroj · UTM médium · UTM kampaň · UTM obsah · UTM klíčové slovo · Souhlas · Odhlášeno
+- Empty table: Zatím žádné leady.
+- Values: Souhlas "ano"; Odhlášeno shows the date or "–"; an empty value (e.g. no fund) shows "–".
