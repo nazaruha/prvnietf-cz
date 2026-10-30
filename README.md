@@ -1,24 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# prvnietf.cz
 
-## Getting Started
+Mobile landing page for Czech retail investors who come from an Instagram/Facebook ad. Two questions point them to a European (UCITS) ETF that is similar to a well-known US fund, then the page explains **what happens after you buy** (drops, dividends, taxes) and offers a free PDF guide in exchange for an email.
 
-First, run the development server:
+Live: [prvnietf.cz](https://prvnietf.cz). Demo project for a job application (Clientelo, test task B). Not investment advice; the page never tells anyone what to buy.
+
+## What the visitor sees
+
+1. **Hero** that repeats the ad's headline: variant A by default, variant B with `?v=b`.
+2. **Picker**: 2 questions (time horizon, reaction to a 30 % drop) → one of `world` (VT → VWCE), `sp500` (VOO → VUAA), `mix60` (AOR → V60A, a *similar type* of fund) or `not-yet` (under 3 years).
+3. **Result card**, free and not gated: TER compared with the US fund, dividends, contents, ISIN, the latest price (when the daily snapshot exists) and the data dates.
+4. **Lead form** → `/dekujeme` (thank-you page with the PDF button) and the guide email.
+5. Social proof (mock data, labelled), timeline "Co se stane po nákupu" with real crash data, explainer "Proč evropská verze", second CTA, disclaimer, sources, footer.
+
+Other pages: `/prvni-3-roky-s-etf` (guide page linked from the email), `/odhlasit` (unsubscribe), `/soukromi` (privacy), `/admin` (leads table).
+
+## Stack
+
+Next.js 16 (App Router, `cacheComponents`) · TypeScript · Tailwind CSS 4 · Vercel · Neon Postgres + Prisma 7 · Resend · PostHog Cloud EU (cookieless) · Alpha Vantage (server-side only).
+
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm ci                      # also generates the Prisma client (postinstall)
+# create .env.local with the variables below
+npx prisma migrate deploy   # creates the tables (uses DIRECT_URL)
+npm run dev                 # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Without a database the page still renders: price lines are hidden and the form shows its server-error message.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Set them in Vercel and in `.env.local`. Never commit them.
+
+| Variable | Used for |
+|---|---|
+| `DATABASE_URL` | Neon **pooled** connection, used by the app at runtime |
+| `DIRECT_URL` | Neon direct connection, used only by `prisma migrate` |
+| `RESEND_API_KEY` | Sending the guide email from `pruvodce@mail.prvnietf.cz` |
+| `UNSUBSCRIBE_SECRET` | Signs the `/odhlasit` links in the email (HMAC) |
+| `ALPHAVANTAGE_API_KEY` | Daily price refresh (cron only, never on a visitor request) |
+| `CRON_SECRET` | Protects `/api/cron/refresh-funds`; Vercel Cron sends it as `Authorization: Bearer …` |
+| `ADMIN_USERNAME`, `ADMIN_PASSWORD` | Basic Auth for `/admin`; without them `/admin` refuses everyone |
+| `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` | PostHog (public by design); without it analytics is off |
+
+## Lead flow
+
+1. The form validates the email and consent, then `POST /api/lead` with the fund, ad version and UTM parameters. A hidden honeypot field catches bots: they get a fake success and nothing is stored.
+2. The server validates again, upserts the lead by email (a repeat submit is not an error and counts as new consent), stores the consent text as shown on the page, and sends the guide email with Resend. If the email fails, the lead is still saved and the visitor still reaches `/dekujeme`.
+3. The email address is never put in a URL and never sent to PostHog.
+4. **Unsubscribe:** every email has a signed `/odhlasit` link and `List-Unsubscribe` / `List-Unsubscribe-Post` headers. Opening the link changes nothing; only the button (a POST) or the mail app's one-click POST to `/api/odhlasit` unsubscribes, because mail scanners open links automatically.
+
+## Fund data and prices
+
+- **Static facts** (TER, ISIN, holdings, countries, allocation) come from the issuers' factsheets in `data/*.json`, each with its source and date. Crash data is in `data/crashes.json`.
+- **Prices:** Vercel Cron calls `GET /api/cron/refresh-funds` once a day at 06:00 UTC (`vercel.json`). It makes 9 Alpha Vantage requests spaced 15 s apart (free tier: 25/day, 5/minute), validates every value (rate-limit messages arrive as HTTP 200) and saves only valid ones to the `FundSnapshot` table. One failed ticker doesn't block the others, and a bad response never overwrites a good snapshot.
+- The page reads the snapshot through a cached function (`src/lib/prices/getFundPrices.ts`), so visitors never trigger Alpha Vantage or wait for the database. The price line shows its trading date; with no snapshot it is hidden.
+- **After the first deploy**, fill the table once:
+
+  ```bash
+  curl -H "Authorization: Bearer $CRON_SECRET" https://prvnietf.cz/api/cron/refresh-funds
+  ```
+
+  It takes 2–3 minutes; the JSON reports how many values were saved.
+
+## Admin
+
+`/admin` lists all leads, newest first. It's protected by HTTP Basic Auth in `src/proxy.ts` (Next 16's name for middleware; it runs only on `/admin`), compares credentials in constant time and is `noindex`.
+
+**This is demo-level protection:** one shared username and password, no rate limiting, no audit log. It keeps the leads off the public internet for the review; a real product would need proper sign-in.
+
+## Checks
+
+```bash
+npm run typecheck && npm run lint && npm test && npm run build
+```
+
+Tests use Node's built-in runner (`node --test`, files `src/**/*.test.ts`): picker mapping and flow, Czech number formatting, lead validation and parsing, email content, unsubscribe tokens, Alpha Vantage parsing, admin auth.
+
+## Where things are documented
+
+- `docs/project.md`: product spec · `docs/copy.md`: approved Czech copy (all page text comes from here) · `docs/design.md`: design direction
+- `DECISIONS.md`: decisions and their reasons · `docs/STATUS.md`: current state · `NOTES-ai.md` and `ai-log/`: AI session history
 
 ## Analytics (PostHog Cloud EU)
 
@@ -30,21 +93,6 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 - Events go through our own domain at `/r9t` (rewrites in `next.config.ts`), so ad blockers don't drop them. If a `middleware.ts`/`proxy.ts` is added, its matcher must not catch `/r9t`.
 
 **Setup:** set `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` in Vercel and `.env.local` (without it, analytics is off). In the PostHog project settings, turn on **Enable cookieless tracking** (otherwise PostHog drops the events) and **Discard client IP data**.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 # Expected conversion and A/B hypotheses
 
