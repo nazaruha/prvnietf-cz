@@ -5,6 +5,7 @@ import { getHeroVariant } from "@/components/Analytics/variant";
 import { Explainer } from "@/components/Explainer/Explainer";
 import { Funnel } from "@/components/Funnel/Funnel";
 import { Hero, HeroFallback } from "@/components/Hero/Hero";
+import { SecondCta } from "@/components/SecondCta/SecondCta";
 import { SocialProof } from "@/components/SocialProof/SocialProof";
 
 // Section order from docs/project.md "Page structure". Locked for the parallel agents.
@@ -22,7 +23,7 @@ export default function Home({ searchParams }: PageProps<"/">) {
         <SocialProof />
         <AfterPurchase />
         <Explainer />
-        {/* TODO: second CTA, disclaimer, sources (section 8) */}
+        <SecondCta />
       </main>
       {/* TODO: footer (section 8) */}
       <Analytics />
