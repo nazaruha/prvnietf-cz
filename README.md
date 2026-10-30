@@ -48,7 +48,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 # Expected conversion and A/B hypotheses
 
-Paste into the README. Replace the assumed funnel numbers with real PostHog numbers once traffic exists.
+Replace the assumed funnel numbers with real PostHog numbers once traffic exists.
 
 ## Expected conversion
 
