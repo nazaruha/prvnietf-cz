@@ -189,9 +189,16 @@ function vanguardAsOf(): string {
   return [...dates][0];
 }
 
-/** Small text under every card (docs/copy.md). Each issuer's date comes from data/. */
+/** "Vanguard k 30. 9. 2026, iShares k 26. 10. 2026": each issuer's data date from data/. */
+const ISSUER_DATES = `Vanguard k ${formatDate(vanguardAsOf())}, iShares k ${formatDate(US_FUNDS.AOR.asOf)}`;
+
+/** Small text under every card (docs/copy.md). */
 export const RESULT_FOOTNOTE =
-  `Ceny jsou závěrečné z předchozího obchodního dne. Údaje o fondech: factsheety Vanguard k ${formatDate(vanguardAsOf())}, iShares k ${formatDate(US_FUNDS.AOR.asOf)}. Nejde o investiční doporučení.`;
+  `Ceny jsou závěrečné z předchozího obchodního dne. Údaje o fondech: factsheety ${ISSUER_DATES}. Nejde o investiční doporučení.`;
+
+/** Disclaimer above the sources and footer (docs/copy.md section 8). */
+export const DISCLAIMER =
+  `Nejde o investiční doporučení ani daňové poradenství. Stránka srovnává veřejně dostupné údaje o fondech. Hodnota investice může klesat i růst a minulé výnosy nezaručují budoucí. Údaje o fondech: ${ISSUER_DATES}. Ceny z předchozího obchodního dne. Daňová pravidla podle zákona č.${NBSP}586/1992 Sb. ve znění pro rok 2026.`;
 
 /** Price line: "Cena: [price] EUR (Xetra, [date])". Hidden when there is no snapshot. */
 export const PRICE_LINE = { label: "Cena", venue: "Xetra" } as const;

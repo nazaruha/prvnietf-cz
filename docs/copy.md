@@ -149,7 +149,7 @@ Link at the end: **Podrobně to máme v průvodci →** (scrolls to the form)
 
 - Heading: **Fond máte. Teď už jen vědět, co čekat.**
 - Button: **Chci průvodce zdarma** (scrolls to the form)
-- Disclaimer: Nejde o investiční doporučení ani daňové poradenství. Stránka srovnává veřejně dostupné údaje o fondech. Hodnota investice může klesat i růst a minulé výnosy nezaručují budoucí. Údaje o fondech k 30. 9. 2026, ceny z předchozího obchodního dne. Daňová pravidla podle zákona č. 586/1992 Sb. ve znění pro rok 2026.
+- Disclaimer: Nejde o investiční doporučení ani daňové poradenství. Stránka srovnává veřejně dostupné údaje o fondech. Hodnota investice může klesat i růst a minulé výnosy nezaručují budoucí. Údaje o fondech: Vanguard k [30. 9. 2026], iShares k [26. 10. 2026]. Ceny z předchozího obchodního dne. Daňová pravidla podle zákona č. 586/1992 Sb. ve znění pro rok 2026. (Dates from `asOf` in `data/`; built as `DISCLAIMER` in `src/data/etfs.ts`.)
 - Sources: Vanguard (factsheety VWCE, VUAA, V60A, VT, VOO) · iShares (AOR) · Alpha Vantage (ceny) · Nařízení (EU) č. 1286/2014 · Zákon č. 586/1992 Sb.
 - Footer: Demo projekt pro výběrové řízení · Ochrana osobních údajů
 

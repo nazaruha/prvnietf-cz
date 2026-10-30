@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { getResult, getResultId, RESULT_FOOTNOTE, RESULTS } from "./etfs.ts";
+import { DISCLAIMER, getResult, getResultId, RESULT_FOOTNOTE, RESULTS } from "./etfs.ts";
 
 const NBSP = " ";
 
@@ -54,6 +54,14 @@ describe("RESULTS", () => {
     assert.equal(
       RESULT_FOOTNOTE,
       `Ceny jsou závěrečné z předchozího obchodního dne. Údaje o fondech: factsheety Vanguard k 30.${NBSP}9.${NBSP}2026, iShares k 26.${NBSP}10.${NBSP}2026. Nejde o investiční doporučení.`,
+    );
+  });
+
+  it("dates the disclaimer per issuer from data/", () => {
+    assert.ok(
+      DISCLAIMER.includes(
+        `Údaje o fondech: Vanguard k 30.${NBSP}9.${NBSP}2026, iShares k 26.${NBSP}10.${NBSP}2026. Ceny z předchozího obchodního dne.`,
+      ),
     );
   });
 
