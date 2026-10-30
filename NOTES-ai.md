@@ -38,3 +38,21 @@ Running log for the README section "How I worked with AI". Updated at the end of
   - Inserted D21 before D20 in `DECISIONS.md`; caught on self-review.
 - Decisions: PostHog EU cookieless + first-party proxy (reasoning in README "Analytics"; a D21 draft was later removed by the user). The `phc_` token is public by design (write-only), so `NEXT_PUBLIC_` stays despite Vercel's warning.
 - Full transcript: `ai-log/01-infrastructure-and-analytics.md`.
+
+## Session 02 – Design direction and review gaps (30. 10. 2026)
+
+- Built / set up (branch `docs/design-and-gaps`, docs only):
+  - 3c9db9a `docs/design.md` (design direction from the user's brief + what the ads establish + chip contrast check) and two `CLAUDE.md` lines.
+  - a11212a ads (4 PNGs + texts), 47c8044 copy update + `/soukromi` text, 8f48ecd PDF guide/cover/og-image, bd7e425 + 4bbd464 README conversion and A/B section, 48b3159 STATUS.
+  - Verified: frontend-design plugin installed at project scope and enabled (skill `frontend-design`); it wasn't in this session's skill list because the session started before it was enabled.
+  - Researched (current Vercel docs): Hobby cron once/day ±59 min, function max 300 s with Fluid compute → the 9-request refresh (~140 s) fits.
+  - Computed WCAG contrast for the chip colours: white text 2.2–4.1:1, so only large text; dark text on `#e0a526`.
+- AI mistakes and how they were caught:
+  - The session-start git snapshot said branch `docs/ai-log-01`; running `git status` showed `master` with PR #5/#6 merged, and that the planned `chore: enable frontend-design plugin` commit already existed. Caught by the session routine's git check.
+  - Tried to sample ad colours with Pillow without checking it was installed; it wasn't. Didn't install it (no new dependencies); deferred exact neutral hex values to the hero build.
+  - Read the user's one-word "confirm" as yes to three separate questions (commit, unsubscribe, neutral base) and said so; not corrected.
+  - The user's updated `copy.md` still marked sender and unsubscribe as open and said `/soukromi`/PDF text didn't exist; the pasted README section kept a "Paste into the README." note. Caught by reading the diffs before committing.
+  - The suggested commit message `docs: record decisions on unsubscribe, cron and sender` was 54 chars (rule: under 50). Caught on review; shortened.
+  - Tried to invoke `/end-session` via the Skill tool; it's user-only (disable-model-invocation).
+- Decisions: neutral base (hero follows its ad, rest light); unsubscribe implemented with signed token + POST button + List-Unsubscribe headers; cron fits Hobby with `maxDuration = 300`; sender `pruvodce@`. Added to `DECISIONS.md` as D21 (unsubscribe) and D22 (hero tone); four new "Known pitfalls" lines in `CLAUDE.md`.
+- Full transcript: `ai-log/02-design-and-gaps.md`.
