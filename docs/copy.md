@@ -1,5 +1,7 @@
 # Page copy (Czech) — approved
 
+Last checked 30. 10. 2026. `/soukromi` text: `docs/soukromi.md`. PDF guide: `public/prvni-3-roky-s-etf.pdf`. Not written yet: the unsubscribe confirmation page; ask before inventing it.
+
 Formal *vy*. Decimal comma (0,14 %), non-breaking space before % and Kč, thousands separated by a space (100 000 Kč). Text in `[brackets]` is filled in by the page.
 
 ## Meta
@@ -17,9 +19,9 @@ Formal *vy*. Decimal comma (0,14 %), non-breaking space before % and Kč, thousa
 - Headline: **Které ETF si koupit jako první?**
 - Subline: Odpovězte na 2 otázky a uvidíte fond, který se k vám hodí – i s poplatky a tím, jak ho koupit z Česka.
 
-**Variant B** (`?v=b` only; Ad B "What happens after you buy")
+**Variant B** (`?v=b` only; Ad B "Koupeno. A co dál?")
 - Label: 2 otázky · 20 vteřin · bez registrace
-- Headline: **Koupíte ETF. A co dál?**
+- Headline: **Koupeno. A co dál?** (repeats the ad headline word for word)
 - Subline: Poklesy, dividendy, daně. Odpovězte na 2 otázky a uvidíte, co čekat u fondu, který se k vám hodí.
 
 ## 2. Picker
@@ -67,7 +69,7 @@ Shared header: **Lidé s podobnými odpověďmi obvykle volí:**
 - Line: Podobný americký fond **AOR** → evropský fond podobného typu: **V60A**
 - Label: *podobný typ fondu, ne přesná obdoba*
 - Full name: Vanguard LifeStrategy 60% Equity UCITS ETF (EUR) Accumulating
-- Roční poplatek (TER): **0,25 %** (AOR: 0,15 %)
+- Roční poplatek (TER): **0,25 %** (AOR: 0,15 % po dočasné slevě, bez ní 0,20 %)
 - Dividendy: automaticky se reinvestují
 - Složení: zhruba 60 % akciových a 40 % dluhopisových fondů Vanguard
 - Cena: [price] EUR (Xetra, [date])
@@ -174,3 +176,5 @@ Nejde o investiční doporučení ani daňové poradenství.
 
 Odhlásit se můžete jedním kliknutím: [Odhlásit]
 ```
+
+[Odhlásit] links to `/odhlasit` (signed token, unsubscribes via a button, plus `List-Unsubscribe` headers); see `docs/STATUS.md`. Don't ship the email before that page works.
