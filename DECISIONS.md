@@ -116,3 +116,11 @@ Where the brief was unclear, or research changed an assumption, the decision and
 ## D22. Hero follows its ad's light or dark tone
 - **Decision:** hero A is dark, hero B is light; everything below the hero is light for both variants.
 - **Why:** matching the ad's tone makes the click feel continuous (D12), and the rest of the page is reading and form-filling, which is easier as dark text on a light background.
+
+## D23. Parallel agents own folders, shared files are locked
+- **Decision:** each parallel agent edits only its assigned folders. The data files, `page.tsx`, `layout.tsx`, `globals.css`, `Funnel`, `format.ts`, `db.ts`, the Prisma schema and `package.json` are locked. Agents commit on their own branch without per-commit approval and never push.
+- **Why:** three agents in parallel worktrees would otherwise conflict in the same few files. `Funnel` is the only place where the picker, result card and form are connected, so no agent needs to touch the page.
+
+## D24. Prisma 7.10.1 with the Neon adapter, pinned exactly
+- **Decision:** `prisma`, `@prisma/client` and `@prisma/adapter-neon` pinned to 7.10.1; no `ws`, no `dotenv`; the client is generated on install into `src/generated/` and not committed.
+- **Why:** npm's `latest` for Prisma is an 8.0 release candidate. Node 22+ has WebSocket built in, and `prisma.config.ts` loads `.env.local` with Node's `loadEnvFile`.
