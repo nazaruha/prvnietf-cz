@@ -89,3 +89,8 @@ Secrets live only in Vercel / `.env.local`: `DATABASE_URL` (pooled), `DIRECT_URL
 - Chip colours with white text are under 4.5:1: white only for large text, dark text on `#e0a526`.
 - The session-start git snapshot can be stale. Trust `git status`, not the reminder.
 - Commits: **summary line only**, one concern per commit. If `package.json` mixes concerns, stage only the relevant lines.
+- A change across files (rename a prop, add a function): edit the **definition before its callers**, or the edit hook reports type errors in between.
+- Never run `python -` in Bash: it waits on stdin and hangs. Use Edit/Write, or `node` with a script file.
+- Scripts with regexes or backslashes: write them with the Write tool, not a Bash heredoc (Git Bash mangles backslashes).
+- Check `npm view <pkg> dist-tags` before installing: `latest` can be a release candidate (Prisma 8.0). Pin an exact stable version.
+- `docs/STATUS.md` can be wrong about env vars (it said `DIRECT_URL` was missing): check Vercel's env settings before relying on it.
