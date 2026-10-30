@@ -108,3 +108,11 @@ Where the brief was unclear, or research changed an assumption, the decision and
 ## D20. No investment or tax advice
 - **Decision:** results say what people with similar answers usually choose. A disclaimer is on every result and in the footer.
 - **Why:** personal investment recommendations are regulated in Czechia (ČNB).
+
+## D21. Unsubscribe with a signed link
+- **Decision:** `unsubscribedAt` on `Lead`, an HMAC-signed `/odhlasit` link that unsubscribes via a POST button, and `List-Unsubscribe` + `List-Unsubscribe-Post` headers on the email.
+- **Why:** the consent copy promises one-click unsubscribe, and GDPR Art. 7(3) says withdrawing consent must be as easy as giving it. POST only, because mail scanners open links automatically.
+
+## D22. Hero follows its ad's light or dark tone
+- **Decision:** hero A is dark, hero B is light; everything below the hero is light for both variants.
+- **Why:** matching the ad's tone makes the click feel continuous (D12), and the rest of the page is reading and form-filling, which is easier as dark text on a light background.
