@@ -21,6 +21,7 @@ model Lead {
   utmMedium      String?
   utmCampaign    String?
   utmContent     String?
+  utmTerm        String?
   // Set by /odhlasit, cleared when the same email submits the form again (DECISIONS.md D21).
   unsubscribedAt DateTime?
   createdAt      DateTime  @default(now())

@@ -32,7 +32,7 @@ Mobile lead-magnet landing page for Czech retail investors comparing NYSE ETFs w
 
 Next.js **16** (App Router) + TypeScript + Tailwind CSS 4 · Vercel (live on **prvnietf.cz**) · Neon Postgres + Prisma · Resend (domain `mail.prvnietf.cz` verified; guide email from `pruvodce@mail.prvnietf.cz`) · PostHog Cloud EU (cookieless, proxied via `/r9t`, see README "Analytics") · Alpha Vantage (server-side only) · font Bricolage Grotesque via `next/font`.
 
-Secrets live only in Vercel / `.env.local`: `DATABASE_URL` (pooled), `DIRECT_URL`, `RESEND_API_KEY`, `ALPHAVANTAGE_API_KEY`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `CRON_SECRET`, `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` (public by design). Never print, log or commit them.
+Secrets live only in Vercel / `.env.local`: `DATABASE_URL` (pooled), `DIRECT_URL`, `RESEND_API_KEY`, `ALPHAVANTAGE_API_KEY`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `CRON_SECRET`, `UNSUBSCRIBE_SECRET` (signs `/odhlasit` links), `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` (public by design). Never print, log or commit them.
 
 ## Session routine
 
@@ -81,7 +81,7 @@ Secrets live only in Vercel / `.env.local`: `DATABASE_URL` (pooled), `DIRECT_URL
 - PDF: open in a new tab with a button; **no automatic download**.
 - Analytics is cookieless: nothing survives a full page load, so every redirect/link to another page uses `withAttribution()` from `src/lib/attribution.ts`; funnel events go through `track()` from `src/lib/analytics.ts`; `form_submitted` fires only after `/api/lead` returns `ok`.
 - The email to PostHog: never. `person_profiles: "never"`, no `identify()`.
-- `src/app/api/send/route.ts` is a **test route** with hardcoded recipients and no protection. Remove it when the real `/api/lead` exists; it must not ship.
+- Values a server route or page needs (copy, constants) must not live in a `"use client"` module: imported on the server they are a client reference, not the value. Put them in a plain module (e.g. `LeadForm/consent.ts`).
 - Create SDK clients that need secrets (Resend, Alpha Vantage, …) **inside the handler**, never at module level: a variable missing in Preview fails the whole build.
 - In third-party dashboards (Vercel, PostHog, Wedos, Resend), **read a setting's current state before toggling it**, and confirm it after a reload.
 - Unsubscribe and any other state-changing email link: act only on **POST**, never on GET, because mail scanners open links automatically.
