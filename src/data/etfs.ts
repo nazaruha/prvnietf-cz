@@ -5,7 +5,7 @@
 
 import usFundsJson from "../../data/us-funds.json" with { type: "json" };
 import ucitsFundsJson from "../../data/ucits-funds.json" with { type: "json" };
-import { formatNumber, formatPercent } from "../lib/format.ts";
+import { formatDate, formatNumber, formatPercent } from "../lib/format.ts";
 
 const NBSP = " ";
 
@@ -174,9 +174,16 @@ export type PickerResult = FundResult | NotYetResult;
 
 export const RESULT_HEADER = "Lidé s podobnými odpověďmi obvykle volí:";
 
-/** Small text under every card (docs/copy.md). */
+/** Data date shared by all Vanguard funds; fails loudly if a factsheet update makes them differ. */
+function vanguardAsOf(): string {
+  const dates = new Set([US_FUNDS.VOO.asOf, US_FUNDS.VT.asOf, ...Object.values(UCITS_FUNDS).map((f) => f.asOf)]);
+  if (dates.size !== 1) throw new Error(`Vanguard funds have different data dates: ${[...dates].join(", ")}`);
+  return [...dates][0];
+}
+
+/** Small text under every card (docs/copy.md). Each issuer's date comes from data/. */
 export const RESULT_FOOTNOTE =
-  `Ceny jsou závěrečné z předchozího obchodního dne. Údaje o fondech: factsheety Vanguard a iShares k 30.${NBSP}9.${NBSP}2026. Nejde o investiční doporučení.`;
+  `Ceny jsou závěrečné z předchozího obchodního dne. Údaje o fondech: factsheety Vanguard k ${formatDate(vanguardAsOf())}, iShares k ${formatDate(US_FUNDS.AOR.asOf)}. Nejde o investiční doporučení.`;
 
 /** Price line: "Cena: [price] EUR (Xetra, [date])". Hidden when there is no snapshot. */
 export const PRICE_LINE = { label: "Cena", venue: "Xetra" } as const;

@@ -81,7 +81,7 @@ Shared header: **Lidé s podobnými odpověďmi obvykle volí:**
 - Text: Když peníze budete potřebovat do 3 let, pokles se nemusí stihnout vrátit. A při prodeji dřív než za 3 roky můžete platit daň ze zisku. Na krátkou dobu se obvykle hodí spořicí účet nebo termínovaný vklad.
 - Lead-in to the form: Až budete připraveni, průvodce se vám bude hodit.
 
-**Under every card (small text):** Ceny jsou závěrečné z předchozího obchodního dne. Údaje o fondech: factsheety Vanguard a iShares k 30. 9. 2026. Nejde o investiční doporučení.
+**Under every card (small text):** Ceny jsou závěrečné z předchozího obchodního dne. Údaje o fondech: factsheety Vanguard k [30. 9. 2026], iShares k [26. 10. 2026]. Nejde o investiční doporučení. (Dates from `asOf` in `data/`.)
 
 ## 4. Form
 

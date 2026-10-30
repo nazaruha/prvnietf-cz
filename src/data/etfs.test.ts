@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { getResult, getResultId, RESULTS } from "./etfs.ts";
+import { getResult, getResultId, RESULT_FOOTNOTE, RESULTS } from "./etfs.ts";
 
 const NBSP = " ";
 
@@ -48,6 +48,13 @@ describe("RESULTS", () => {
     assert.equal(RESULTS.mix60.similarTypeLabel, "podobný typ fondu, ne přesná obdoba");
     assert.equal(RESULTS.world.similarTypeLabel, undefined);
     assert.equal(RESULTS.sp500.similarTypeLabel, undefined);
+  });
+
+  it("dates the footnote per issuer from data/", () => {
+    assert.equal(
+      RESULT_FOOTNOTE,
+      `Ceny jsou závěrečné z předchozího obchodního dne. Údaje o fondech: factsheety Vanguard k 30.${NBSP}9.${NBSP}2026, iShares k 26.${NBSP}10.${NBSP}2026. Nejde o investiční doporučení.`,
+    );
   });
 
   it("getResult returns the full result for the answers", () => {
