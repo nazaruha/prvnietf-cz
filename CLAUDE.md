@@ -72,4 +72,8 @@ Secrets live only in Vercel / `.env.local`: `DATABASE_URL` (pooled), `DIRECT_URL
 - `src/app/api/send/route.ts` is a **test route** with hardcoded recipients and no protection. Remove it when the real `/api/lead` exists; it must not ship.
 - Create SDK clients that need secrets (Resend, Alpha Vantage, …) **inside the handler**, never at module level: a variable missing in Preview fails the whole build.
 - In third-party dashboards (Vercel, PostHog, Wedos, Resend), **read a setting's current state before toggling it**, and confirm it after a reload.
+- Unsubscribe and any other state-changing email link: act only on **POST**, never on GET, because mail scanners open links automatically.
+- Vercel Hobby: cron runs **once a day** at most and up to 59 min late; functions stop at **300 s** (with Fluid compute). Long jobs set `maxDuration`.
+- Chip colours with white text are under 4.5:1: white only for large text, dark text on `#e0a526`.
+- The session-start git snapshot can be stale. Trust `git status`, not the reminder.
 - Commits: **summary line only**, one concern per commit. If `package.json` mixes concerns, stage only the relevant lines.
