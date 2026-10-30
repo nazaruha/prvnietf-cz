@@ -4,6 +4,7 @@ import { Analytics } from "@/components/Analytics/Analytics";
 import { getHeroVariant } from "@/components/Analytics/variant";
 import { Funnel } from "@/components/Funnel/Funnel";
 import { Hero, HeroFallback } from "@/components/Hero/Hero";
+import { SocialProof } from "@/components/SocialProof/SocialProof";
 
 // Section order from docs/project.md "Page structure". Locked for the parallel agents.
 
@@ -17,7 +18,7 @@ export default function Home({ searchParams }: PageProps<"/">) {
       <main className="flex-1">
         {/* TODO(cron): pass the latest FundSnapshot prices; until then every price line is hidden. */}
         <Funnel prices={{}} />
-        {/* TODO: social proof strip (docs/copy.md section 5) */}
+        <SocialProof />
         <AfterPurchase />
         {/* TODO: explainer "Proč evropská verze" (section 7) */}
         {/* TODO: second CTA, disclaimer, sources (section 8) */}
