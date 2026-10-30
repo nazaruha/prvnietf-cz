@@ -8,6 +8,7 @@ import { Funnel } from "@/components/Funnel/Funnel";
 import { Hero, HeroFallback } from "@/components/Hero/Hero";
 import { SecondCta } from "@/components/SecondCta/SecondCta";
 import { SocialProof } from "@/components/SocialProof/SocialProof";
+import { getFundPrices } from "@/lib/prices/getFundPrices";
 
 // Section order from docs/project.md "Page structure". Locked for the parallel agents.
 
@@ -19,8 +20,7 @@ export default function Home({ searchParams }: PageProps<"/">) {
         <VariantHero searchParams={searchParams} />
       </Suspense>
       <main className="flex-1">
-        {/* TODO(cron): pass the latest FundSnapshot prices; until then every price line is hidden. */}
-        <Funnel prices={{}} />
+        <PricedFunnel />
         <SocialProof />
         <AfterPurchase />
         <Explainer />
@@ -34,4 +34,9 @@ export default function Home({ searchParams }: PageProps<"/">) {
 
 async function VariantHero({ searchParams }: Pick<PageProps<"/">, "searchParams">) {
   return <Hero variant={getHeroVariant(await searchParams)} />;
+}
+
+/** Prices from the daily FundSnapshot cache ("use cache"), so this stays in the static shell. */
+async function PricedFunnel() {
+  return <Funnel prices={await getFundPrices()} />;
 }
