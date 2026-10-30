@@ -120,6 +120,8 @@ Errors:
 1. **První dny a týdny.** Hodnota se mění každý den. Výkyvy o pár procent jsou běžné a nic neznamenají. Nemusíte dělat nic.
 2. **První větší pokles.** Přijde dřív nebo později. Takhle vypadaly ty největší za posledních 25 let:
 
+   (Numbers: `data/crashes.json`, rendered by `src/data/crashes.ts`.)
+
    | Období | Pokles | Zpátky na původní úroveň |
    |---|---|---|
    | 2022 (inflace) | −24 % | prosinec 2023 |

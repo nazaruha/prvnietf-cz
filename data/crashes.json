@@ -1,0 +1,13 @@
+{
+  "_note": "Largest drops of the S&P 500 (SPY) in 1999–2026, from monthly adjusted closes. Calculated in session 00 (DECISIONS.md D10). Month-end data understates intra-month drops (2020 was about -34 % intra-month).",
+  "series": "SPY",
+  "measure": "Monthly adjusted close in USD, incl. dividends",
+  "range": "1999–2026",
+  "source": "Alpha Vantage (TIME_SERIES_MONTHLY_ADJUSTED)",
+  "crashes": [
+    { "id": "inflation-2022", "fromYear": 2022, "toYear": 2022, "drawdown": -0.24, "recoveredMonth": "2023-12" },
+    { "id": "covid-2020", "fromYear": 2020, "toYear": 2020, "drawdown": -0.19, "recoveredMonth": "2020-07" },
+    { "id": "financial-crisis-2007", "fromYear": 2007, "toYear": 2009, "drawdown": -0.51, "recoveredMonth": "2012-03" },
+    { "id": "dotcom-2000", "fromYear": 2000, "toYear": 2002, "drawdown": -0.45, "recoveredMonth": "2006-11" }
+  ]
+}

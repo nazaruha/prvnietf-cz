@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { formatAmount, formatDate, formatNumber, formatPercent } from "./format.ts";
+import { formatAmount, formatDate, formatMonth, formatNumber, formatPercent } from "./format.ts";
 
 const NBSP = " ";
 
@@ -12,6 +12,22 @@ describe("formatNumber", () => {
 
   it("uses a decimal comma", () => {
     assert.equal(formatNumber(3.5, 1), "3,5");
+  });
+
+  it("uses a typographic minus", () => {
+    assert.equal(formatNumber(-24), "−24");
+  });
+});
+
+describe("formatMonth", () => {
+  it("names the month in Czech", () => {
+    assert.equal(formatMonth("2023-12"), `prosinec${NBSP}2023`);
+    assert.equal(formatMonth("2012-03"), `březen${NBSP}2012`);
+  });
+
+  it("rejects anything that isn't an ISO month", () => {
+    assert.throws(() => formatMonth("2023-13"));
+    assert.throws(() => formatMonth("2023-12-01"));
   });
 });
 
