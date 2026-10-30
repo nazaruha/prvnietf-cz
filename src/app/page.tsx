@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { AfterPurchase } from "@/components/AfterPurchase/AfterPurchase";
 import { Analytics } from "@/components/Analytics/Analytics";
 import { getHeroVariant } from "@/components/Analytics/variant";
+import { Explainer } from "@/components/Explainer/Explainer";
 import { Funnel } from "@/components/Funnel/Funnel";
 import { Hero, HeroFallback } from "@/components/Hero/Hero";
 import { SocialProof } from "@/components/SocialProof/SocialProof";
@@ -20,7 +21,7 @@ export default function Home({ searchParams }: PageProps<"/">) {
         <Funnel prices={{}} />
         <SocialProof />
         <AfterPurchase />
-        {/* TODO: explainer "Proč evropská verze" (section 7) */}
+        <Explainer />
         {/* TODO: second CTA, disclaimer, sources (section 8) */}
       </main>
       {/* TODO: footer (section 8) */}
