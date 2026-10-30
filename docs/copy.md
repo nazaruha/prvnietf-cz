@@ -59,7 +59,7 @@ Shared header: **Lidé s podobnými odpověďmi obvykle volí:**
 - Full name: Vanguard S&P 500 UCITS ETF (USD) Accumulating
 - Roční poplatek (TER): **0,07 %** (VOO: 0,03 %)
 - Dividendy: automaticky se reinvestují
-- Největší firmy: Nvidia, Apple, Microsoft
+- Největší firmy: NVIDIA, Apple, Microsoft (the 3 largest holdings in `data/ucits-funds.json`, spelled as in the factsheet)
 - Cena: [price] EUR (Xetra, [date])
 - ISIN: IE00BFMXXD54
 - Proč se hodí: Poklesy berete jako příležitost. Fond je soustředěnější než celý svět – víc USA, víc technologií, větší výkyvy.

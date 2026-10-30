@@ -36,9 +36,10 @@ describe("RESULTS", () => {
     );
   });
 
-  it("builds the VWCE contents and V60A composition lines from data/", () => {
-    const value = (id: "world" | "mix60", label: string) =>
+  it("builds the VWCE contents, VUAA companies and V60A composition lines from data/", () => {
+    const value = (id: "world" | "sp500" | "mix60", label: string) =>
       RESULTS[id].facts.find((f) => f.label === label)?.value;
+    assert.equal(value("sp500", "Největší firmy"), "NVIDIA, Apple, Microsoft");
     assert.equal(value("world", "Obsahuje"), `3${NBSP}821 firem, USA 62${NBSP}%, Japonsko 6${NBSP}%, Tchaj-wan 3,5${NBSP}%`);
     assert.equal(value("mix60", "Složení"), `zhruba 60${NBSP}% akciových a 40${NBSP}% dluhopisových fondů Vanguard`);
   });

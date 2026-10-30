@@ -214,6 +214,14 @@ function vwceContents(): string {
   return [`${formatNumber(raw.numberOfStocks)} firem`, ...countries].join(", ");
 }
 
+// "Největší firmy: NVIDIA, Apple, Microsoft": the three largest holdings, names as in data/.
+function vuaaTopCompanies(): string {
+  return ucitsFundsJson.VUAA.topHoldings
+    .slice(0, 3)
+    .map(([name]) => name)
+    .join(", ");
+}
+
 function v60aComposition(): string {
   const { equity, bonds } = ucitsFundsJson.V60A.targetAllocation;
   return `zhruba ${formatPercent(equity)} akciových a ${formatPercent(bonds)} dluhopisových fondů Vanguard`;
@@ -251,9 +259,7 @@ export const RESULTS: { "not-yet": NotYetResult } & Record<FundResult["id"], Fun
     ter: fundTer(VUAA, US_FUNDS.VOO),
     facts: [
       dividendsFact(VUAA),
-      // TODO(data): docs/copy.md names these, but data/ucits-funds.json has no VUAA topHoldings.
-      // Add them there with source + date, then build this line from the data like VWCE's.
-      { label: "Největší firmy", value: "Nvidia, Apple, Microsoft" },
+      { label: "Největší firmy", value: vuaaTopCompanies() },
     ],
     whyItFits: {
       label: "Proč se hodí",
