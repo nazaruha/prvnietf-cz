@@ -59,7 +59,7 @@ Shared header: **Lidé s podobnými odpověďmi obvykle volí:**
 - Full name: Vanguard S&P 500 UCITS ETF (USD) Accumulating
 - Roční poplatek (TER): **0,07 %** (VOO: 0,03 %)
 - Dividendy: automaticky se reinvestují
-- Největší firmy: Nvidia, Apple, Microsoft
+- Největší firmy: NVIDIA, Apple, Microsoft (the 3 largest holdings in `data/ucits-funds.json`, spelled as in the factsheet)
 - Cena: [price] EUR (Xetra, [date])
 - ISIN: IE00BFMXXD54
 - Proč se hodí: Poklesy berete jako příležitost. Fond je soustředěnější než celý svět – víc USA, víc technologií, větší výkyvy.
@@ -81,7 +81,7 @@ Shared header: **Lidé s podobnými odpověďmi obvykle volí:**
 - Text: Když peníze budete potřebovat do 3 let, pokles se nemusí stihnout vrátit. A při prodeji dřív než za 3 roky můžete platit daň ze zisku. Na krátkou dobu se obvykle hodí spořicí účet nebo termínovaný vklad.
 - Lead-in to the form: Až budete připraveni, průvodce se vám bude hodit.
 
-**Under every card (small text):** Ceny jsou závěrečné z předchozího obchodního dne. Údaje o fondech: factsheety Vanguard a iShares k 30. 9. 2026. Nejde o investiční doporučení.
+**Under every card (small text):** Ceny jsou závěrečné z předchozího obchodního dne. Údaje o fondech: factsheety Vanguard k [30. 9. 2026], iShares k [26. 10. 2026]. Nejde o investiční doporučení. (Dates from `asOf` in `data/`.)
 
 ## 4. Form
 
@@ -89,6 +89,7 @@ Next to the form: PDF cover image, title **První 3 roky s ETF**.
 
 - Heading: **Co vás čeká v prvních 3 letech s [VWCE]?**
 - Heading for "zatím ne": **Průvodce na dobu, kdy budete připraveni**
+- Heading when the picker was skipped (e.g. via the second CTA; the form is open, `fund` is empty): **První 3 roky s ETF**
 - Subline: Krátký průvodce v PDF. Hned si ho stáhnete a pošleme vám ho i e-mailem.
 - What's inside:
   - Co čekat v prvních měsících po nákupu
@@ -119,6 +120,8 @@ Errors:
 1. **První dny a týdny.** Hodnota se mění každý den. Výkyvy o pár procent jsou běžné a nic neznamenají. Nemusíte dělat nic.
 2. **První větší pokles.** Přijde dřív nebo později. Takhle vypadaly ty největší za posledních 25 let:
 
+   (Numbers: `data/crashes.json`, rendered by `src/data/crashes.ts`.)
+
    | Období | Pokles | Zpátky na původní úroveň |
    |---|---|---|
    | 2022 (inflace) | −24 % | prosinec 2023 |
@@ -146,7 +149,7 @@ Link at the end: **Podrobně to máme v průvodci →** (scrolls to the form)
 
 - Heading: **Fond máte. Teď už jen vědět, co čekat.**
 - Button: **Chci průvodce zdarma** (scrolls to the form)
-- Disclaimer: Nejde o investiční doporučení ani daňové poradenství. Stránka srovnává veřejně dostupné údaje o fondech. Hodnota investice může klesat i růst a minulé výnosy nezaručují budoucí. Údaje o fondech k 30. 9. 2026, ceny z předchozího obchodního dne. Daňová pravidla podle zákona č. 586/1992 Sb. ve znění pro rok 2026.
+- Disclaimer: Nejde o investiční doporučení ani daňové poradenství. Stránka srovnává veřejně dostupné údaje o fondech. Hodnota investice může klesat i růst a minulé výnosy nezaručují budoucí. Údaje o fondech: Vanguard k [30. 9. 2026], iShares k [26. 10. 2026]. Ceny z předchozího obchodního dne. Daňová pravidla podle zákona č. 586/1992 Sb. ve znění pro rok 2026. (Dates from `asOf` in `data/`; built as `DISCLAIMER` in `src/data/etfs.ts`.)
 - Sources: Vanguard (factsheety VWCE, VUAA, V60A, VT, VOO) · iShares (AOR) · Alpha Vantage (ceny) · Nařízení (EU) č. 1286/2014 · Zákon č. 586/1992 Sb.
 - Footer: Demo projekt pro výběrové řízení · Ochrana osobních údajů
 

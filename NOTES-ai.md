@@ -56,3 +56,28 @@ Running log for the README section "How I worked with AI". Updated at the end of
   - Tried to invoke `/end-session` via the Skill tool; it's user-only (disable-model-invocation).
 - Decisions: neutral base (hero follows its ad, rest light); unsubscribe implemented with signed token + POST button + List-Unsubscribe headers; cron fits Hobby with `maxDuration = 300`; sender `pruvodce@`. Added to `DECISIONS.md` as D21 (unsubscribe) and D22 (hero tone); four new "Known pitfalls" lines in `CLAUDE.md`.
 - Full transcript: `ai-log/02-design-and-gaps.md`.
+
+## Session 03 – Skeleton and data contract for parallel agents (30. 10. 2026)
+
+- Built (branch `chore/skeleton`, not pushed):
+  - bbb921c skeleton: `src/data/etfs.ts` data contract (types, picker questions, `getResultId` + tests, results built from `data/*.json` with copy verbatim), `src/lib/format.ts` + tests, Prisma 7.10.1 + Neon adapter (schema, `prisma.config.ts`, lazy `getDb()`, `postinstall` generate), component folders with typed placeholder props (Hero, Picker, ResultCard, AfterPurchase, LeadForm, Analytics, Funnel), layout (Bricolage, `lang="cs"`, meta from copy.md), design tokens with neutrals sampled from the ad PNGs, "Parallel agents" section in `CLAUDE.md`.
+  - cb98c50 VUAA top 10 holdings from the Vanguard factsheet (30. 9. 2026) into `data/ucits-funds.json`; card line built from data.
+  - 20ab6d0 / a94c00c card footnote and disclaimer dated per issuer (Vanguard 30. 9., iShares 26. 10. 2026) from `asOf`.
+  - a948ba2 `SKIPPED_PICKER`: the form is always open; heading "První 3 roky s ETF" when the picker was skipped.
+  - bb97417 crash table numbers into `data/crashes.json` + `src/data/crashes.ts` (Czech labels, typographic minus, Czech months).
+- Pushed back on the brief before coding (plan mode):
+  - "Create CLAUDE.md" would have overwritten the existing one → added a section instead (user chose).
+  - "4 fund results, each US + UCITS" → the spec has 3 pairs + `not-yet`.
+  - Agents can't wait for per-commit approval in parallel → they commit freely on their own branch (user chose).
+- AI mistakes and how they were caught:
+  - Renamed props/added functions across files in the wrong order (caller before callee) four times; the PostToolUse hook reported tsc errors each time between edits. Harmless, but noisy.
+  - Ran `python - 2>/dev/null || node -e …` to edit files; `python -` waited on stdin and hung for 120 s. Caught by the timeout; stopped with TaskStop and used Edit.
+  - A regex in a Bash heredoc lost a backslash in Git Bash (node SyntaxError); rewrote the script with the Write tool.
+  - First LeadForm placeholder showed the "zatím ne" heading for a visitor who hadn't answered yet (wrong copy for the case). Caught on self-review before the commit; raised as a missing-copy question.
+  - Wrote "8.9:1" contrast for ink-muted from memory; computed 8.6:1 and fixed the comment.
+  - npm `latest` for `prisma` is an 8.0 RC; caught by checking `npm view prisma dist-tags` before relying on it; pinned 7.10.1.
+  - Found data/copy mismatch: footnote said "iShares k 30. 9. 2026" but AOR `asOf` is 2026-10-26. Caught by comparing copy.md with data; user chose to date per issuer.
+  - `docs/STATUS.md` said `DIRECT_URL` was missing; the user says it exists in Vercel. Not verified by me.
+  - WebFetch couldn't read the factsheet PDF and `Read` needs pdftoppm (not installed); extracted the text with a zero-dependency Node script instead of installing anything.
+- Decisions: parallel-agent ownership and locked files (`CLAUDE.md`); Prisma 7.10.1 + `@prisma/adapter-neon` (no `ws`, Node 22+ has WebSocket; no `dotenv`, `loadEnvFile`); hero variant inside `Suspense` with a headline-less fallback; approved copy changes: "NVIDIA" spelling, per-issuer dates in footnote and disclaimer (disclaimer split into two sentences), skipped-picker form heading. Proposed D23/D24 for `DECISIONS.md` (see session end).
+- Full transcript: `ai-log/03-skeleton-and-data-contract.md`.
