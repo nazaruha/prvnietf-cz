@@ -1,0 +1,73 @@
+{
+  "_note": "Static fund facts for the UCITS funds. Prices come live from Alpha Vantage (TICKER.DEX). Retrieved 2026-10-27 from Vanguard factsheets.",
+  "VWCE": {
+    "name": "Vanguard FTSE All-World UCITS ETF (USD) Accumulating",
+    "isin": "IE00BK5BQT80",
+    "xetraTicker": "VWCE",
+    "avSymbol": "VWCE.DEX",
+    "tradingCurrency": "EUR",
+    "baseCurrency": "USD",
+    "ter": 0.0014,
+    "income": "accumulating",
+    "index": "FTSE All-World Index",
+    "domicile": "Ireland",
+    "inception": "2019-07-23",
+    "fundAssetsUsdM": 87295,
+    "shareClassAssetsUsdM": 60194,
+    "numberOfStocks": 3821,
+    "topCountries": { "United States": 0.622, "Japan": 0.061, "Taiwan": 0.035, "United Kingdom": 0.031, "Canada": 0.029 },
+    "topHoldings": [
+      ["NVIDIA", 0.050], ["Apple", 0.045], ["Microsoft", 0.036], ["Alphabet", 0.034], ["Amazon", 0.023],
+      ["TSMC", 0.018], ["Broadcom", 0.015], ["Meta", 0.015], ["Micron", 0.011], ["Tesla", 0.010]
+    ],
+    "asOf": "2026-09-30",
+    "retrieved": "2026-10-27",
+    "source": "https://fund-docs.vanguard.com/FTSE_All-World_UCITS_ETF_USD_Accumulating_9679_NETH_INT_EN.pdf"
+  },
+  "VUAA": {
+    "name": "Vanguard S&P 500 UCITS ETF (USD) Accumulating",
+    "isin": "IE00BFMXXD54",
+    "xetraTicker": "VUAA",
+    "avSymbol": "VUAA.DEX",
+    "tradingCurrency": "EUR",
+    "baseCurrency": "USD",
+    "ter": 0.0007,
+    "income": "accumulating",
+    "index": "S&P 500 Net Total Return Index",
+    "domicile": "Ireland",
+    "inception": "2019-05-14",
+    "fundAssetsUsdM": 88973,
+    "shareClassAssetsUsdM": 36337,
+    "asOf": "2026-09-30",
+    "retrieved": "2026-10-27",
+    "source": "https://fund-docs.vanguard.com/SandP_500_UCITS_ETF_USD_Accumulating_9694_NETH_INT_EN.pdf"
+  },
+  "V60A": {
+    "name": "Vanguard LifeStrategy 60% Equity UCITS ETF (EUR) Accumulating",
+    "isin": "IE00BMVB5P51",
+    "xetraTicker": "V60A",
+    "avSymbol": "V60A.DEX",
+    "tradingCurrency": "EUR",
+    "baseCurrency": "EUR",
+    "ter": 0.0025,
+    "income": "accumulating",
+    "index": null,
+    "indexNote": "Actively managed fund of funds, no benchmark index",
+    "domicile": "Ireland",
+    "inception": "2020-12-08",
+    "fundAssetsEurM": 1123,
+    "shareClassAssetsEurM": 992,
+    "targetAllocation": { "equity": 0.60, "bonds": 0.40 },
+    "topUnderlyingFunds": [
+      ["Vanguard FTSE All-World UCITS ETF (USD) Acc", 0.193],
+      ["Vanguard FTSE Developed World UCITS ETF (USD) Acc", 0.193],
+      ["Vanguard Global Aggregate Bond UCITS ETF EUR Hedged Acc", 0.191],
+      ["Vanguard FTSE North America UCITS ETF", 0.127],
+      ["Vanguard USD Treasury Bond UCITS ETF EUR Hedged Acc", 0.077]
+    ],
+    "asOf": "2026-09-30",
+    "retrieved": "2026-10-27",
+    "source": "https://fund-docs.vanguard.com/LifeStrategy_60_Equity_UCITS_ETF_EUR_Accumulating_9494_NETH_INT_DU.pdf",
+    "kid": "https://fund-docs.vanguard.com/ie00bmvb5p51_priipskid_nl.pdf"
+  }
+}
