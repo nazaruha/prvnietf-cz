@@ -6,6 +6,7 @@ import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import type { FormContext } from "@/data/etfs";
 import { currentAttribution, track } from "@/lib/analytics";
 import { UTM_KEYS, withAttribution, type UtmKey } from "@/lib/attribution";
+import { LEAD_FORM_ID } from "./anchor";
 import { CONSENT_BEFORE_LINK, PRIVACY_LINK } from "./consent";
 import { submitLead } from "./submitLead";
 import { LEAD_ERRORS, normalizeEmail, validateLead, type LeadFieldErrors } from "./validateLead";
@@ -18,9 +19,6 @@ export type LeadFormProps = {
   /** The result shown above the form, or SKIPPED_PICKER when the picker isn't finished. */
   context: FormContext;
 };
-
-/** Anchor id the "scroll to the form" CTAs point at. */
-export const LEAD_FORM_ID = "pruvodce";
 
 const GUIDE_TITLE = "První 3 roky s ETF";
 const SUBLINE = "Krátký průvodce v PDF. Hned si ho stáhnete a pošleme vám ho i e-mailem.";
