@@ -172,6 +172,14 @@ export type NotYetResult = {
 
 export type PickerResult = FundResult | NotYetResult;
 
+/** The visitor reached the form (e.g. via the second CTA) without finishing the picker. */
+export type SkippedPicker = { kind: "skipped"; id: "skipped" };
+
+export const SKIPPED_PICKER: SkippedPicker = { kind: "skipped", id: "skipped" };
+
+/** What the lead form is shown for: a picker result, or a skipped picker. */
+export type FormContext = PickerResult | SkippedPicker;
+
 export const RESULT_HEADER = "Lidé s podobnými odpověďmi obvykle volí:";
 
 /** Data date shared by all Vanguard funds; fails loudly if a factsheet update makes them differ. */

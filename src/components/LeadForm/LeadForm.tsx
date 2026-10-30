@@ -1,35 +1,38 @@
 "use client";
 
-import type { PickerResult } from "@/data/etfs";
+import type { FormContext } from "@/data/etfs";
 
 // Owner: lead agent. Copy from docs/copy.md "4. Form"; submits through submitLead.ts.
 // Tracks `form_viewed`, `form_started`, and `form_submitted` (only after `{ ok: true }`)
 // with track(); redirects with withAttribution() (see CLAUDE.md pitfalls).
 
 export type LeadFormProps = {
-  /** The result shown above the form; null before the picker is finished. */
-  result: PickerResult | null;
+  /** The result shown above the form, or SKIPPED_PICKER when the picker isn't finished. */
+  context: FormContext;
 };
 
 /** Anchor id the "scroll to the form" CTAs point at. */
 export const LEAD_FORM_ID = "pruvodce";
 
-/**
- * Placeholder: heading only.
- * TODO(copy): docs/copy.md has no heading for a visitor who reaches the form
- * (e.g. via the second CTA) before finishing the picker. Ask the user.
- */
-export function LeadForm({ result }: LeadFormProps) {
-  const heading =
-    result === null
-      ? null
-      : result.kind === "fund"
-        ? `Co vás čeká v prvních 3 letech s ${result.ucits.ticker}?`
-        : "Průvodce na dobu, kdy budete připraveni";
+/** Form heading per context (docs/copy.md "4. Form"). */
+function headingFor(context: FormContext): string {
+  switch (context.kind) {
+    case "fund":
+      return `Co vás čeká v prvních 3 letech s ${context.ucits.ticker}?`;
+    case "not-yet":
+      return "Průvodce na dobu, kdy budete připraveni";
+    case "skipped":
+      return "První 3 roky s ETF";
+  }
+}
 
+/** Placeholder: heading only. The form is always open, also when the picker was skipped. */
+export function LeadForm({ context }: LeadFormProps) {
   return (
-    <section id={LEAD_FORM_ID} aria-label="První 3 roky s ETF" className="px-gutter py-10">
-      {heading && <h2 className="text-2xl font-bold">{heading}</h2>}
+    <section id={LEAD_FORM_ID} aria-labelledby="lead-form" className="px-gutter py-10">
+      <h2 id="lead-form" className="text-2xl font-bold">
+        {headingFor(context)}
+      </h2>
     </section>
   );
 }

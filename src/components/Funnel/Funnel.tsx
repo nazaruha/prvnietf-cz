@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { RESULTS, type FundPrice, type ResultId, type UcitsTicker } from "@/data/etfs";
+import { RESULTS, SKIPPED_PICKER, type FundPrice, type ResultId, type UcitsTicker } from "@/data/etfs";
 import { LeadForm } from "@/components/LeadForm/LeadForm";
 import { Picker } from "@/components/Picker/Picker";
 import { ResultCard } from "@/components/ResultCard/ResultCard";
@@ -23,7 +23,7 @@ export function Funnel({ prices }: FunnelProps) {
     <>
       <Picker onResult={setResultId} />
       {result && <ResultCard result={result} price={price} />}
-      <LeadForm result={result} />
+      <LeadForm context={result ?? SKIPPED_PICKER} />
     </>
   );
 }

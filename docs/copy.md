@@ -89,6 +89,7 @@ Next to the form: PDF cover image, title **První 3 roky s ETF**.
 
 - Heading: **Co vás čeká v prvních 3 letech s [VWCE]?**
 - Heading for "zatím ne": **Průvodce na dobu, kdy budete připraveni**
+- Heading when the picker was skipped (e.g. via the second CTA; the form is open, `fund` is empty): **První 3 roky s ETF**
 - Subline: Krátký průvodce v PDF. Hned si ho stáhnete a pošleme vám ho i e-mailem.
 - What's inside:
   - Co čekat v prvních měsících po nákupu

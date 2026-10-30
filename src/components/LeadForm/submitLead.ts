@@ -7,7 +7,7 @@ import type { UcitsTicker } from "@/data/etfs";
 export type LeadPayload = {
   email: string;
   consent: boolean;
-  /** UCITS ticker of the shown result; null for "not-yet". */
+  /** UCITS ticker of the shown result; null for "not-yet" and for a skipped picker. */
   fund: UcitsTicker | null;
   adVersion: AdVersion | null;
   utm: Partial<Record<UtmKey, string>>;
