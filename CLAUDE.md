@@ -10,6 +10,7 @@ Mobile lead-magnet landing page for Czech retail investors comparing NYSE ETFs w
 
 - Product spec (audience, page structure, picker, lead flow, admin): @docs/project.md
 - Approved Czech copy (use it verbatim, never invent copy): `docs/copy.md`
+- Design direction: `docs/design.md`. Read it before any UI work.
 - Decisions and their reasons: `DECISIONS.md`
 - Fund facts with sources and dates: `data/us-funds.json`, `data/ucits-funds.json`
 - Session history: `NOTES-ai.md` (one entry per session, append-only; read the latest entry at the start) and the full transcripts in `ai-log/`.
@@ -45,6 +46,7 @@ Secrets live only in Vercel / `.env.local`: `DATABASE_URL` (pooled), `DIRECT_URL
 ## Rules for working with me
 
 - **Be critical.** If my request is a bad idea, say so and explain why before doing it.
+- For all UI work, use the frontend-design plugin skills together with `docs/design.md`. `docs/design.md` wins where they disagree.
 - **Ask instead of guessing.** If something is unclear or missing, ask. Never fill gaps with invented data, copy, tickers, numbers or APIs.
 - **Read before you write.** Before changing a file, read it and the files that import it. Don't rely on memory of earlier sessions.
 - **No shortcuts:** no `any`, no `@ts-ignore`, no disabled lint rules, no skipped tests, no hardcoded values that belong in `data/` or env variables.
