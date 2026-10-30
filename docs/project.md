@@ -59,17 +59,41 @@ model Lead {
 }
 ```
 
+## Market data cache
+
+Goal: fresh-enough data, no dependency on Alpha Vantage while a visitor is on the page, and well within the free limit (25 requests/day).
+
+- **Refresh:** Vercel Cron, once a day (e.g. 06:00 UTC, after the US close), calls `GET /api/cron/refresh-funds`.
+  - The route is protected: it requires the `CRON_SECRET` that Vercel sends in the `Authorization` header and returns `401` otherwise.
+  - It makes 9 requests: `GLOBAL_QUOTE` for VWCE.DEX, VUAA.DEX, V60A.DEX, VOO, VT, AOR, and `ETF_PROFILE` for VOO, VT, AOR. Requests are spaced ≥ 15 s apart to respect the 5/minute limit; the route sets a long enough `maxDuration` or splits the work.
+- **Validation:** see `.claude/rules/data.md`. Only valid values are written; one failed ticker doesn't block the others.
+- **Storage:** one row per ticker and field, upserted.
+
+```prisma
+model FundSnapshot {
+  ticker    String
+  field     String   // "price" | "ter"
+  value     Decimal
+  currency  String?  // "EUR" | "USD" for prices
+  asOf      DateTime // trading day / last_updated from the API
+  fetchedAt DateTime @default(now())
+  source    String   @default("Alpha Vantage")
+
+  @@id([ticker, field])
+}
+```
+
+- **Reading:** server components read `FundSnapshot`. A missing row → fall back to `data/*.json` and hide the price line.
+- **Staleness:** the page always shows `asOf` ("Cena k 26. 10. 2026"). If a price is older than 7 days, show it with the date and log a warning; never hide that it's old.
+- **Seeding:** run the refresh route once manually after deploy so the table isn't empty.
+
 ## Admin
 
-`/admin` shows the leads table (newest first). Protected by HTTP Basic Auth in `middleware.ts` using `ADMIN_USER` / `ADMIN_PASSWORD`: `401` + `WWW-Authenticate: Basic` otherwise. `noindex`. Demo-level protection, and the README says so.
+`/admin` shows the leads table (newest first). Protected by HTTP Basic Auth in `proxy.ts` (Next 16 name for middleware; matcher limited to `/admin`, never `/r9t`) using `ADMIN_USERNAME` / `ADMIN_PASSWORD`: `401` + `WWW-Authenticate: Basic` otherwise. `noindex`. Demo-level protection, and the README says so.
 
-## Tracking (PostHog Cloud EU, cookieless)
+## Tracking (PostHog Cloud EU, implemented)
 
-Funnel events: `page_view` → `picker_q1` → `picker_q2` → `result_shown` → `form_viewed` → `form_started` → `form_submitted` → `pdf_downloaded`. Every event carries `ad_version`, `hero_variant` and all `utm_*`.
-
-- `page_view` is PostHog's automatic `$pageview`; the other steps use `track()` from `src/lib/analytics.ts`.
-- Attribution is added to every event automatically. Redirects (e.g. to `/dekujeme`) use `withAttribution()` from `src/lib/attribution.ts` to keep `v` and `utm_*`.
-- Never send the email or other personal data to PostHog.
+Setup and reasoning are in the README section "Analytics". Funnel: `$pageview` → `picker_q1` → `picker_q2` → `result_shown` → `form_viewed` → `form_started` → `form_submitted` → `pdf_downloaded`. Every event carries `ad_version`, `hero_variant` and `utm_*` (added in `before_send`). Use `track()` and `withAttribution()`; never call `posthog.capture` directly in components.
 
 ## Open items
 

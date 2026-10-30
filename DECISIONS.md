@@ -108,11 +108,3 @@ Where the brief was unclear, or research changed an assumption, the decision and
 ## D20. No investment or tax advice
 - **Decision:** results say what people with similar answers usually choose. A disclaimer is on every result and in the footer.
 - **Why:** personal investment recommendations are regulated in Czechia (ČNB).
-
-## D21. PostHog Cloud EU, cookieless, behind a first-party proxy
-- **Decision:** PostHog Cloud EU with `cookieless_mode: "always"`, `person_profiles: "never"`, client IP discarded, events proxied through `/r9t` on our domain.
-- **Why:**
-  - EU hosting, funnels and custom events with properties on the free plan. Vercel Web Analytics on Hobby has no custom events or UTM parameters.
-  - `persistence: "memory"` was considered, but every full page load gets a new anonymous ID, so the form on `/` and the PDF download on `/dekujeme` would belong to different "people" and the funnel breaks. Cookieless mode identifies by a server-side hash with a daily salt instead, and still stores nothing on the device.
-  - The proxy stops ad blockers from dropping events; many people in the target group use one.
-- **Note:** "no consent banner" is my reading, to be confirmed by whoever handles GDPR.

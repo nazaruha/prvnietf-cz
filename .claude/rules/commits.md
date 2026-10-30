@@ -23,7 +23,7 @@
 Use **Conventional Commits** for every commit message, e.g. `feat: add picker question 2`, `fix: parse Alpha Vantage price strings`, `docs: update README conversion section`. This keeps the commit history clear and consistent; the reviewer reads it.
 
 - Summary line **under 50 characters**, imperative mood, lowercase after the type, no trailing period.
-- Put details (what and why) in the body, separated by a blank line, wrapped at ~72 characters.
+- Summary line only, no body. Details go in the PR description.
 - One logical change per commit. Commit after each finished step, not at the end of the session.
 - Never commit secrets, `.env*` files or generated build output.
 
