@@ -3,6 +3,7 @@ import { AfterPurchase } from "@/components/AfterPurchase/AfterPurchase";
 import { Analytics } from "@/components/Analytics/Analytics";
 import { getHeroVariant } from "@/components/Analytics/variant";
 import { Explainer } from "@/components/Explainer/Explainer";
+import { Footer } from "@/components/Footer/Footer";
 import { Funnel } from "@/components/Funnel/Funnel";
 import { Hero, HeroFallback } from "@/components/Hero/Hero";
 import { SecondCta } from "@/components/SecondCta/SecondCta";
@@ -25,7 +26,7 @@ export default function Home({ searchParams }: PageProps<"/">) {
         <Explainer />
         <SecondCta />
       </main>
-      {/* TODO: footer (section 8) */}
+      <Footer />
       <Analytics />
     </>
   );
