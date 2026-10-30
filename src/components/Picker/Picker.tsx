@@ -74,7 +74,7 @@ export function Picker({ onResult }: PickerProps) {
               selected={state.reaction}
               onAnswer={(reaction) => {
                 const result = dispatch({ type: "answerReaction", reaction });
-                track("picker_q2", { answer: reaction, result });
+                track("picker_q2", result ? { answer: reaction, result } : { answer: reaction });
               }}
             />
             <button
