@@ -1,6 +1,7 @@
 import posthog from "posthog-js";
 import { currentAttribution } from "@/lib/analytics";
 import { POSTHOG_EU_UI_HOST, POSTHOG_PROXY_PATH } from "@/lib/posthog-proxy";
+import { redactUrlProperties } from "@/lib/redactUrl";
 
 const token = process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN;
 
@@ -18,9 +19,10 @@ if (token) {
     // Nobody is identified, so no person profiles are created.
     person_profiles: "never",
     // Every event, including `$pageview`, carries `ad_version`, `hero_variant` and `utm_*`.
+    // The /odhlasit token is removed from every URL first (it links to the lead in the database).
     before_send: (event) => ({
       ...event,
-      properties: { ...event.properties, ...currentAttribution() },
+      properties: { ...redactUrlProperties(event.properties), ...currentAttribution() },
     }),
   });
 }
