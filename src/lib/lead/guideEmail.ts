@@ -3,15 +3,10 @@
 import { UCITS_FUNDS, type UcitsTicker } from "../../data/etfs.ts";
 import { readAttribution, withAttribution } from "../attribution.ts";
 import type { ValidLead } from "./parseLead.ts";
+import { GUIDE_PAGE_PATH, UNSUBSCRIBE_API_PATH, UNSUBSCRIBE_PAGE_PATH, UNSUBSCRIBE_TOKEN_PARAM } from "./paths.ts";
 
 export const GUIDE_EMAIL_FROM = "pruvodce@mail.prvnietf.cz";
 export const GUIDE_EMAIL_SUBJECT = "Váš průvodce: První 3 roky s ETF";
-
-export const GUIDE_PAGE_PATH = "/prvni-3-roky-s-etf";
-export const UNSUBSCRIBE_PAGE_PATH = "/odhlasit";
-/** One-click target for `List-Unsubscribe-Post` (RFC 8058); mail apps POST here. */
-export const UNSUBSCRIBE_API_PATH = "/api/odhlasit";
-export const UNSUBSCRIBE_TOKEN_PARAM = "t";
 
 export type GuideEmailLinks = {
   guideUrl: string;

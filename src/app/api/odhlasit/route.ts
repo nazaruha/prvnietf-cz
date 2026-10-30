@@ -1,4 +1,4 @@
-import { UNSUBSCRIBE_TOKEN_PARAM } from "@/lib/lead/guideEmail";
+import { UNSUBSCRIBE_TOKEN_PARAM } from "@/lib/lead/paths";
 import { unsubscribe } from "@/lib/lead/unsubscribe";
 
 // One-click unsubscribe (RFC 8058): mail apps POST `List-Unsubscribe=One-Click` to the
