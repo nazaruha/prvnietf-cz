@@ -32,7 +32,7 @@ const CHIPS = [
 ] as const;
 
 /** Shared box so the fallback reserves the hero's height (no layout shift). */
-const SHELL = "relative overflow-hidden px-gutter pt-7 pb-6 min-h-64 sm:min-h-80 sm:pt-12 sm:pb-10";
+const SHELL = "relative overflow-hidden pt-7 pb-6 min-h-64 sm:min-h-80 sm:pt-12 sm:pb-10 lg:min-h-96 lg:pt-16 lg:pb-14";
 
 export type HeroProps = {
   variant: AdVersion;
@@ -46,12 +46,12 @@ export function Hero({ variant }: HeroProps) {
   return (
     <header className={`${SHELL} ${isA ? "bg-night text-paper" : "border-b border-mist bg-paper text-ink"}`}>
       {isA && <ScreenGlow />}
-      <div className="relative flex items-start gap-10">
-        <div className="max-w-prose">
+      <div className="page-container relative flex items-start justify-between gap-10">
+        <div className="max-w-prose lg:max-w-3xl">
           <p className={`text-sm font-semibold ${isA ? "text-paper/80" : "text-ink-muted"}`}>{LABEL}</p>
           <h1
             className={`mt-3 leading-[0.95] font-extrabold tracking-[-0.03em] text-balance ${
-              isA ? "text-[2.5rem] sm:text-6xl" : "text-5xl sm:text-7xl"
+              isA ? "text-[2.5rem] sm:text-6xl lg:text-7xl" : "text-5xl sm:text-7xl lg:text-8xl"
             }`}
           >
             {headline}
@@ -87,11 +87,11 @@ function ScreenGlow() {
 
 function TickerChips() {
   return (
-    <div aria-hidden className="hidden shrink-0 flex-col items-start gap-3 pt-6 sm:flex">
+    <div aria-hidden className="hidden shrink-0 flex-col items-start gap-3 pt-6 sm:flex lg:gap-5 lg:pt-4 lg:pr-16">
       {CHIPS.map(({ ticker, tone, tilt }) => (
         <span
           key={ticker}
-          className={`${tone} ${tilt} rounded-xl px-4 py-1.5 text-2xl leading-tight font-extrabold tracking-tight shadow-lg shadow-black/30`}
+          className={`${tone} ${tilt} rounded-xl px-4 py-1.5 text-2xl leading-tight font-extrabold tracking-tight shadow-lg shadow-black/30 lg:px-6 lg:py-2.5 lg:text-4xl`}
         >
           {ticker}
         </span>

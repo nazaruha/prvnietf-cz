@@ -38,6 +38,24 @@
 
   /* Readable line length for body text on wide screens */
   --container-prose: 36rem;
+
+  /* Page column on laptops and desktops: 72rem of content plus the 2rem side padding */
+  --container-page: 76rem;
+}
+
+/*
+ * Shared page column: every section's content aligns to it on wide screens; section
+ * backgrounds stay full width. At 390 px it is just the 16 px gutter.
+ */
+@utility page-container {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--container-page);
+  padding-inline: var(--spacing-gutter);
+
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
 }
 
 @layer base {

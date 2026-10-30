@@ -44,8 +44,8 @@ export function Picker({ onResult }: PickerProps) {
   const headingId = isFirst ? "picker-q1" : "picker-q2";
 
   return (
-    <section aria-labelledby={headingId} className="px-gutter pt-6 pb-8">
-      <div className="max-w-prose">
+    <section aria-labelledby={headingId} className="page-container pt-6 pb-8 md:pt-12 md:pb-14">
+      <div className="max-w-prose md:max-w-3xl">
         <div className="flex items-center gap-3">
           <p className="text-sm font-semibold text-ink-muted">{(isFirst ? HORIZON_QUESTION : REACTION_QUESTION).step}</p>
           <span aria-hidden className="flex gap-1">
@@ -91,6 +91,9 @@ export function Picker({ onResult }: PickerProps) {
   );
 }
 
+// Wide screens: answers side by side, one column per answer (class names spelled out for Tailwind).
+const ANSWER_COLUMNS: Record<number, string> = { 2: "md:grid-cols-2", 3: "md:grid-cols-3" };
+
 type QuestionStepProps<T extends string> = {
   id: string;
   headingRef: RefObject<HTMLHeadingElement | null>;
@@ -106,11 +109,15 @@ function QuestionStep<T extends string>({ id, headingRef, question, selected, on
         id={id}
         ref={headingRef}
         tabIndex={-1}
-        className="mt-2 text-2xl leading-tight font-extrabold tracking-tight text-balance focus:outline-none"
+        className="mt-2 text-2xl leading-tight font-extrabold tracking-tight text-balance focus:outline-none md:text-4xl"
       >
         {question.text}
       </h2>
-      <div role="group" aria-labelledby={id} className="mt-4 flex flex-col gap-2">
+      <div
+        role="group"
+        aria-labelledby={id}
+        className={`mt-4 flex flex-col gap-2 md:mt-6 md:grid md:gap-3 ${ANSWER_COLUMNS[question.options.length] ?? ""}`}
+      >
         {question.options.map((option) => {
           const isSelected = option.value === selected;
           return (

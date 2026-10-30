@@ -48,8 +48,8 @@ export function ResultCard({ result, price }: ResultCardProps) {
   }, [result.id]);
 
   return (
-    <section ref={sectionRef} aria-labelledby="result-title" className="scroll-mt-4 px-gutter pb-10">
-      <div className="max-w-prose border-t-4 border-ink pt-5">
+    <section ref={sectionRef} aria-labelledby="result-title" className="page-container scroll-mt-4 pb-10 md:pb-16">
+      <div className="max-w-prose border-t-4 border-ink pt-5 md:pt-8 lg:max-w-none">
         {result.kind === "fund" ? (
           <FundCard result={result} price={price} headingRef={headingRef} />
         ) : (
@@ -69,7 +69,7 @@ function Title({ text, headingRef }: { text: string; headingRef: HeadingRef }) {
       id="result-title"
       ref={headingRef}
       tabIndex={-1}
-      className="text-3xl leading-[1.05] font-extrabold tracking-tight text-balance focus:outline-none"
+      className="text-3xl leading-[1.05] font-extrabold tracking-tight text-balance focus:outline-none md:text-5xl"
     >
       {text}
     </h2>
@@ -83,35 +83,38 @@ function FundCard({ result, price, headingRef }: { result: FundResult; price: Fu
     value: `${formatAmount(price.price, price.currency)} (${PRICE_LINE.venue}, ${formatDate(price.asOf)})`,
   };
 
+  // Phone: one column in reading order. Wide: fund and "why it fits" left, the facts right.
   return (
-    <>
-      <p className="text-sm font-semibold text-ink-muted">{RESULT_HEADER}</p>
-      <div className="mt-1">
-        <Title text={result.title} headingRef={headingRef} />
-      </div>
-
-      <p className="mt-4 text-base leading-snug">
-        {result.usLead}{" "}
-        <span className="rounded-md bg-mist px-1.5 py-0.5 font-extrabold">{us.ticker}</span>
-        {" → "}
-        {result.ucitsLead}
-      </p>
-
-      <div className="mt-3 flex flex-wrap items-end gap-x-3 gap-y-2">
-        <span
-          className={`${CHIP[ucits.ticker]} rounded-xl px-4 py-2 text-3xl leading-none font-extrabold tracking-tight text-paper`}
-        >
-          {ucits.ticker}
-        </span>
-        {result.similarTypeLabel && (
-          <span className="border-l-4 border-chip-amber pl-2 text-sm font-semibold italic">
-            {result.similarTypeLabel}
+    <div className="lg:grid lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:grid-rows-[auto_1fr] lg:gap-x-16">
+      <div className="lg:col-start-1 lg:row-start-1">
+        <p className="text-sm font-semibold text-ink-muted">{RESULT_HEADER}</p>
+        <div className="mt-1">
+          <Title text={result.title} headingRef={headingRef} />
+        </div>
+  
+        <p className="mt-4 text-base leading-snug">
+          {result.usLead}{" "}
+          <span className="rounded-md bg-mist px-1.5 py-0.5 font-extrabold">{us.ticker}</span>
+          {" → "}
+          {result.ucitsLead}
+        </p>
+  
+        <div className="mt-3 flex flex-wrap items-end gap-x-3 gap-y-2">
+          <span
+            className={`${CHIP[ucits.ticker]} rounded-xl px-4 py-2 text-3xl leading-none font-extrabold tracking-tight text-paper`}
+          >
+            {ucits.ticker}
           </span>
-        )}
+          {result.similarTypeLabel && (
+            <span className="border-l-4 border-chip-amber pl-2 text-sm font-semibold italic">
+              {result.similarTypeLabel}
+            </span>
+          )}
+        </div>
+        <p className="mt-2 text-sm text-ink-muted">{ucits.name}</p>
       </div>
-      <p className="mt-2 text-sm text-ink-muted">{ucits.name}</p>
 
-      <dl className="mt-5 divide-y divide-mist border-y border-mist">
+      <dl className="mt-5 divide-y divide-mist self-start border-y border-mist lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mt-0">
         <FactRow label={result.ter.label}>
           <strong className="font-extrabold">{result.ter.value}</strong>{" "}
           <span className="text-ink-muted">({result.ter.comparison})</span>
@@ -127,13 +130,15 @@ function FundCard({ result, price, headingRef }: { result: FundResult; price: Fu
         </FactRow>
       </dl>
 
-      <div className="mt-5 border-l-4 border-ink pl-3">
-        <p className="font-extrabold">{result.whyItFits.label}</p>
-        <p className="mt-1 leading-snug">{result.whyItFits.text}</p>
-      </div>
+      <div className="lg:col-start-1 lg:row-start-2">
+        <div className="mt-5 border-l-4 border-ink pl-3 lg:mt-8">
+          <p className="font-extrabold">{result.whyItFits.label}</p>
+          <p className="mt-1 leading-snug">{result.whyItFits.text}</p>
+        </div>
 
-      {result.note && <p className="mt-4 text-sm leading-snug text-ink-muted">{result.note}</p>}
-    </>
+        {result.note && <p className="mt-4 text-sm leading-snug text-ink-muted">{result.note}</p>}
+      </div>
+    </div>
   );
 }
 
@@ -148,10 +153,10 @@ function FactRow({ label, children }: { label: string; children: ReactNode }) {
 
 function NotYetCard({ result, headingRef }: { result: NotYetResult; headingRef: HeadingRef }) {
   return (
-    <>
+    <div className="max-w-prose">
       <Title text={result.title} headingRef={headingRef} />
       <p className="mt-3 leading-snug">{result.text}</p>
       <p className="mt-4 font-extrabold">{result.formLeadIn}</p>
-    </>
+    </div>
   );
 }

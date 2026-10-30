@@ -142,7 +142,7 @@ export function LeadForm({ context }: LeadFormProps) {
       ref={sectionRef}
       id={LEAD_FORM_ID}
       aria-labelledby={headingId}
-      className="grid scroll-mt-4 grid-cols-[6rem_1fr] items-center gap-x-4 px-gutter py-12 md:mx-auto md:max-w-4xl md:grid-cols-[16rem_1fr] md:items-start md:gap-x-12"
+      className="page-container grid scroll-mt-4 grid-cols-[6rem_1fr] items-center gap-x-4 py-12 md:grid-cols-[16rem_1fr] md:items-start md:gap-x-12 md:py-16 lg:grid-cols-[20rem_1fr] lg:gap-x-20"
     >
       {/* Phone: small tilted cover beside the heading. Wide: large cover in its own column. */}
       <Image
@@ -150,7 +150,7 @@ export function LeadForm({ context }: LeadFormProps) {
         alt={`Obálka průvodce ${GUIDE_TITLE}`}
         width={794}
         height={1123}
-        sizes="(min-width: 768px) 16rem, 6rem"
+        sizes="(min-width: 1024px) 20rem, (min-width: 768px) 16rem, 6rem"
         className="w-full -rotate-3 rounded-sm shadow-[0_8px_24px_-8px_rgb(20_24_31/0.45)] md:row-span-4 md:rotate-0"
       />
       <h2 id={headingId} className="min-w-0 text-2xl leading-tight font-extrabold text-balance md:text-3xl">

@@ -12,17 +12,23 @@ const SOURCE = `Nařízení (EU) č.${NBSP}1286/2014 (PRIIPs)`;
 
 export function Explainer() {
   return (
-    <section aria-labelledby="explainer" className="px-gutter py-12">
-      <div className="max-w-prose">
-        <h2 id="explainer" className="text-3xl leading-[1.05] font-extrabold tracking-tight text-balance">
+    <section aria-labelledby="explainer" className="page-container py-12 md:py-20">
+      {/* Wide: heading on the left, the text at prose width on the right. */}
+      <div className="max-w-prose lg:grid lg:max-w-none lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-16">
+        <h2
+          id="explainer"
+          className="text-3xl leading-[1.05] font-extrabold tracking-tight text-balance md:text-5xl"
+        >
           {HEADING}
         </h2>
-        <div className="mt-5 space-y-4 leading-relaxed">
-          {PARAGRAPHS.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
+        <div className="lg:max-w-prose">
+          <div className="mt-5 space-y-4 leading-relaxed lg:mt-1 lg:text-lg">
+            {PARAGRAPHS.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+          <p className="mt-5 text-sm text-ink-muted">{SOURCE}</p>
         </div>
-        <p className="mt-5 text-sm text-ink-muted">{SOURCE}</p>
       </div>
     </section>
   );

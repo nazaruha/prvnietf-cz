@@ -49,33 +49,38 @@ const CRASH_LEAD_ID = "after-purchase-crashes";
 
 export function AfterPurchase() {
   return (
-    <section aria-labelledby={HEADING_ID} className="px-gutter py-12">
-      <div className="max-w-prose">
-        <h2 id={HEADING_ID} className="text-3xl leading-none font-extrabold tracking-tight text-balance">
-          {HEADING}
-        </h2>
-        <p className="mt-3 text-lg leading-snug text-ink-muted">{SUBLINE}</p>
+    <section aria-labelledby={HEADING_ID} className="page-container py-12 md:py-20">
+      {/* Wide: heading as a sticky left column, the steps and the crash table on the right. */}
+      <div className="max-w-prose lg:grid lg:max-w-none lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-16">
+        <div className="lg:sticky lg:top-8 lg:self-start">
+          <h2 id={HEADING_ID} className="text-3xl leading-none font-extrabold tracking-tight text-balance md:text-5xl">
+            {HEADING}
+          </h2>
+          <p className="mt-3 text-lg leading-snug text-ink-muted">{SUBLINE}</p>
+        </div>
 
-        <ol className="mt-8">
-          {STEPS.map((step, index) => (
-            <TimelineStep
-              key={step.lead}
-              number={index + 1}
-              lead={step.lead}
-              text={step.text}
-              textId={step.extra === "crashes" ? CRASH_LEAD_ID : undefined}
-            >
-              {step.extra === "crashes" ? <CrashTable labelledBy={CRASH_LEAD_ID} /> : null}
-            </TimelineStep>
-          ))}
-        </ol>
-
-        <a
-          href={`#${LEAD_FORM_ID}`}
-          className="mt-2 inline-flex min-h-tap items-center text-lg font-bold text-ink underline decoration-2 underline-offset-4 hover:decoration-4"
-        >
-          {GUIDE_LINK}
-        </a>
+        <div className="lg:max-w-2xl">
+          <ol className="mt-8 lg:mt-1">
+            {STEPS.map((step, index) => (
+              <TimelineStep
+                key={step.lead}
+                number={index + 1}
+                lead={step.lead}
+                text={step.text}
+                textId={step.extra === "crashes" ? CRASH_LEAD_ID : undefined}
+              >
+                {step.extra === "crashes" ? <CrashTable labelledBy={CRASH_LEAD_ID} /> : null}
+              </TimelineStep>
+            ))}
+          </ol>
+  
+          <a
+            href={`#${LEAD_FORM_ID}`}
+            className="mt-2 inline-flex min-h-tap items-center text-lg font-bold text-ink underline decoration-2 underline-offset-4 hover:decoration-4"
+          >
+            {GUIDE_LINK}
+          </a>
+        </div>
       </div>
     </section>
   );
