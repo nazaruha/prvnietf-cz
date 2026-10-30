@@ -6,6 +6,7 @@ import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import type { FormContext } from "@/data/etfs";
 import { currentAttribution, track } from "@/lib/analytics";
 import { UTM_KEYS, withAttribution, type UtmKey } from "@/lib/attribution";
+import { CONSENT_BEFORE_LINK, PRIVACY_LINK } from "./consent";
 import { submitLead } from "./submitLead";
 import { LEAD_ERRORS, normalizeEmail, validateLead, type LeadFieldErrors } from "./validateLead";
 
@@ -32,16 +33,10 @@ const BULLETS = [
 ];
 const EMAIL_LABEL = "Váš e-mail";
 const EMAIL_PLACEHOLDER = "jmeno@email.cz";
-const CONSENT_BEFORE_LINK =
-  "Souhlasím se zpracováním e-mailu a se zasíláním průvodce a tipů k investování do ETF. Odhlásit se můžu kdykoli.";
-const PRIVACY_LINK = "Zásady ochrany osobních údajů";
 const BUTTON = "Poslat mi průvodce";
 const BUTTON_SENDING = "Posíláme…";
 const UNDER_BUTTON = "Bez spamu. Odhlásit se můžete jedním kliknutím.";
 const SUCCESS = "Hotovo. Průvodce vám posíláme na e-mail.";
-
-/** Consent text as shown, stored with the lead (`consentText`, .claude/rules/copy.md). */
-export const CONSENT_TEXT = `${CONSENT_BEFORE_LINK} ${PRIVACY_LINK}`;
 
 type Status = "idle" | "sending" | "success" | "error";
 
