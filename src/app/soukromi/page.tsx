@@ -29,7 +29,8 @@ const contact = (
 
 export default function PrivacyPage() {
   return (
-    <main className="flex-1 px-gutter pt-10 pb-16 md:mx-auto md:w-full md:max-w-prose md:pt-20">
+    // Page column like the landing page; the text itself stays at prose width.
+    <main className="page-container flex-1 pt-10 pb-16 *:max-w-prose md:pt-20 lg:pb-24">
       <h1 className="text-4xl leading-[0.95] font-extrabold tracking-tight text-balance md:text-5xl">{TITLE}</h1>
       <p className="mt-4 text-sm text-ink-muted">Platné od 30. 10. 2026.</p>
 

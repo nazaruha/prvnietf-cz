@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function UnsubscribePage({ searchParams }: PageProps<"/odhlasit">) {
   return (
-    <main className="flex-1 px-gutter pt-10 pb-16 md:mx-auto md:w-full md:max-w-4xl md:pt-20">
+    <main className="page-container flex-1 pt-10 pb-16 md:pt-20 lg:pb-24">
       <h1 className="text-5xl leading-[0.95] font-extrabold tracking-tight text-balance md:text-6xl">
         {UNSUBSCRIBE_COPY.heading}
       </h1>

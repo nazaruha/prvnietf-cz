@@ -7,8 +7,8 @@ const PRIVACY = "Ochrana osobních údajů";
 
 export function Footer() {
   return (
-    <footer className="border-t-2 border-mist px-gutter py-6 text-sm text-ink-muted">
-      <p>
+    <footer className="border-t-2 border-mist py-6 text-sm text-ink-muted">
+      <p className="page-container">
         {DEMO} ·{" "}
         <PrivacyLink className="inline-block py-2 underline underline-offset-4">{PRIVACY}</PrivacyLink>
       </p>

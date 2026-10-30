@@ -23,7 +23,7 @@ export type GuideDownloadProps = {
 
 export function GuideDownload({ heading, subline, page, children }: GuideDownloadProps) {
   return (
-    <main className="flex-1 px-gutter pt-10 pb-16 md:mx-auto md:grid md:w-full md:max-w-4xl md:grid-cols-[16rem_1fr] md:grid-rows-[auto_1fr] md:gap-x-12 md:pt-20">
+    <main className="page-container flex-1 pt-10 pb-16 md:grid md:grid-cols-[16rem_1fr] md:grid-rows-[auto_1fr] md:gap-x-12 md:pt-20 lg:grid-cols-[20rem_1fr] lg:gap-x-20 lg:pb-24">
       <h1 className="text-5xl leading-[0.95] font-extrabold tracking-tight text-balance md:col-start-2 md:text-6xl">
         {heading}
       </h1>
@@ -33,7 +33,7 @@ export function GuideDownload({ heading, subline, page, children }: GuideDownloa
         alt={`Obálka průvodce ${GUIDE_TITLE}`}
         width={794}
         height={1123}
-        sizes="(min-width: 768px) 16rem, 9rem"
+        sizes="(min-width: 1024px) 20rem, (min-width: 768px) 16rem, 9rem"
         preload
         className="mt-8 w-36 -rotate-3 rounded-sm shadow-[0_8px_24px_-8px_rgb(20_24_31/0.45)] md:col-start-1 md:row-span-2 md:row-start-1 md:mt-0 md:w-full md:rotate-0"
       />
