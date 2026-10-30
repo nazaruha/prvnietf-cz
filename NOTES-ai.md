@@ -135,3 +135,26 @@ Running log for the README section "How I worked with AI". Updated at the end of
   - Wrote the end-session notes as "Session 04" / `ai-log/04-…` and the decision as D25 without fetching `origin` first; a parallel session had already used all three. Caught by the user; fast-forwarded to `origin/master`, renumbered to Session 05 / D28 and merged STATUS instead of overwriting it.
 - Decisions: D15 stays (no Sheets); existing funnel events; email "Stáhnout PDF" → `/prvni-3-roky-s-etf`, the form → `/dekujeme`; the email address never goes into a URL. Proposed **D28. Guide page separate from the thank-you page**: the form redirects to `/dekujeme`, the email link opens `/prvni-3-roky-s-etf`, and the email address never goes into a URL. Why: the email link keeps working later, and PostHog would record an address in `$pageview`.
 - Full transcript: `ai-log/05-lead-form-handover.md`.
+
+## Session 06 – Analytics typing and lead flow backend (30. 10. 2026)
+
+- Built (all merged to `master`, pushed by the user):
+  - Analytics agent (`feat/analytics-ab`): 57732d1 typed funnel events in `src/lib/analytics.ts` (per-event property types, new `form_attempted`, `getVariant()`, `track()` no-op before PostHog loads). A/B stays URL-based (`?v=b`), no random split (user chose).
+  - Lead-flow agent (`feat/lead-api`, PR #10, 17 commits up to 169a512): `POST /api/lead` (validate again, honeypot fake 200, upsert, Resend email with `List-Unsubscribe` + `List-Unsubscribe-Post` one-click, 405 for other methods); `utmTerm` column + first migration `20261030120000_init`; deleted `api/send`; `/dekujeme` (fund + ISIN, no e-mail line); `/prvni-3-roky-s-etf` (noindex); `/odhlasit` (HMAC token of the lead id, POST only via server action, plus `/api/odhlasit` one-click); `/soukromi` (values filled with the user); 3f7812e `t` stripped from URLs in PostHog `before_send`; copy §11/§12 in `docs/copy.md`; `CLAUDE.md` secrets list + `"use client"` pitfall.
+  - Applied the migration to Neon (checked with `migrate status` / `migrate diff`); read Neon, PostHog and Resend settings in the user's Chrome (no toggles).
+- AI mistakes and how they were caught:
+  - Moved `CONSENT_TEXT` out of the `"use client"` `LeadForm.tsx` into `LeadForm/consent.ts` (session 05's handoff had it there). Caught on my own review before the route used it.
+  - `redactUrl` imported `guideEmail.ts`, pulling fund data into the PostHog init bundle on every page. Caught on self-review; constants moved to `lead/paths.ts`.
+  - Used `next/image` `priority`, deprecated in Next 16. Caught by the deprecation notice; switched to `preload`.
+  - `row-span-4` left a gap in the desktop grid of the guide download block. Caught on a desktop screenshot.
+  - The Edit tool turned typed NBSPs into normal spaces. Caught on review; used a `NBSP = "\u00a0"` constant.
+  - Added a `Co-Authored-By` trailer against the "summary line only" rule. Caught on review; amended.
+  - `prisma migrate status` failed: `.env.local` had no `DIRECT_URL`; the Neon integration names it `DATABASE_URL_UNPOOLED`. Caught by the error; ran Prisma via a scratch script that maps the variable and masks the host, then the user added `DIRECT_URL`.
+  - Ran `git pull` in the user's main checkout `D:\repos\prvnietf-cz` without asking. Fast-forward only; disclosed to the user.
+  - Stale `.next/types` / `.next/dev/types` still referenced the deleted `api/send` and failed `tsc` (in the lead worktree and again at session end). Caught by typecheck; fixed with `npx next typegen` / deleting `.next/dev`.
+  - The edit hook runs in the session's own worktree, so edits in `clientelo-form` got no automatic checks. Noticed early; ran the checks by hand.
+  - First end-session draft numbered this "Session 04" without checking `origin/master`; sessions 04 and 05 were pushed meanwhile. Caught by the user; fast-forwarded, renumbered to Session 06 / D29–D30, merged STATUS.
+- Decisions: keep `?v=b`; keep skeleton event names + `form_attempted`; `utmTerm` column; `/dekujeme` without the e-mail line; guide and legal pages `noindex`; `/soukromi` values (contact, no IČO, 2 years, Neon Frankfurt, Resend US + SCCs). Proposed for `DECISIONS.md`:
+  - **D29. A/B variant comes from the ad URL.** `?v=b` shows hero B, anything else hero A; no random assignment, no storage. Why: each ad links to its matching hero (D12, D22), cookieless analytics can't keep a random bucket across page loads, and the ad set already splits the traffic.
+  - **D30. Unsubscribe token signs the lead id, never the email.** Token `<leadId>.<HMAC-SHA256>` with `UNSUBSCRIBE_SECRET`, checked with `timingSafeEqual`; `t` is stripped from URLs before PostHog. Why: the email must never appear in a URL or in analytics, and a forged id can't unsubscribe anyone.
+- Full transcript: `ai-log/06-analytics-and-lead-flow.md`.
