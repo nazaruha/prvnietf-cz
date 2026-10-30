@@ -109,3 +109,29 @@ Running log for the README section "How I worked with AI". Updated at the end of
   - **D26. One page column for wide screens.** `page-container` (72rem content) for every section; backgrounds stay full width; phone classes unchanged. Why: the mobile-first page hugged the left edge on laptops and the form was the only centred block.
   - **D27. Result card scrolls into view after question 2.** Why: at 390 px the card renders below the fold and the tap looks like nothing happened. (Open: user to confirm.)
 - Full transcript: `ai-log/04-....md` (to be exported).
+
+## Session 05 – Lead form and handover for the lead-flow agents (30. 10. 2026)
+
+- Built (branch `feat/lead-form`, merged into `master`):
+  - 7775f5e two approved state texts added to `docs/copy.md` §4: "Posíláme…" (sending), "Hotovo. Průvodce vám posíláme na e-mail." (success).
+  - e3a1721 `validateLead.ts` + 7 tests: trimmed email, pragmatic pattern, copy.md error messages; reused by the server route.
+  - 547370f `submitLead()` posts to `/api/lead` and never throws; success only for 2xx **and** `{ ok: true }`.
+  - 62b98e0 `LeadForm.tsx`: email + consent + honeypot, inline errors with focus on the first invalid field, ref lock against double submit, `form_viewed` / `form_started` / `form_submitted` via `track()`, redirect to `/dekujeme?etf=` via `withAttribution()`. Cover beside the heading at 390 px, two columns on wide screens.
+  - Wrote a handoff and an agent prompt (user's temp folder) for the remaining lead flow; the other agents then built `/api/lead`, the migration, `/dekujeme`, `/prvni-3-roky-s-etf`, `/odhlasit`, `/soukromi`, `/admin`, the cron and the page sections. Everything is merged into `master` (f6f7f97); checks pass (96 tests, build), and production answers 200 on all pages.
+- Pushed back on the brief before coding (plan mode):
+  - The task asked for Google Sheets via Apps Script, which contradicts D15 (Neon + Prisma, Resend email, `/admin`) → user kept D15; no `apps-script/`.
+  - A browser-side Apps Script URL would have had to be `NEXT_PUBLIC_*` and spammable (moot after D15 stayed).
+  - Requested events `form_submit` / `form_success` don't exist; the funnel already has `form_started` / `form_submitted` → user chose the existing ones.
+  - "Sending" and "success" copy was missing from copy.md → drafted, approved in the plan, then added.
+  - Proposed slug `/3-prvni-kroky-etf-guide` didn't match the guide ("První 3 roky s ETF") or the PDF filename → user chose `/prvni-3-roky-s-etf`.
+- AI mistakes and how they were caught:
+  - Exported `CONSENT_TEXT` from the `"use client"` `LeadForm.tsx` and told the API agent to import it on the server. On the server that import is a client reference, not the string. Caught by the lead-api agent; fixed in b8db9dd (`LeadForm/consent.ts`), and a pitfall line is now in `CLAUDE.md`.
+  - Double-submit guard read `status` from the render closure, so three synchronous submits sent three requests. Caught by my own browser test (counting `fetch` calls); fixed with a `useRef` lock and re-tested (1 request, plus 1 deliberate retry after the error).
+  - "100 000 Kč" was typed with normal spaces and wrapped before "Kč" at 390 px. Caught on the screenshot; fixed with non-breaking spaces.
+  - First UI draft had a duplicated `<h2>` (one hidden per breakpoint) and an `eslint-disable` for `exhaustive-deps`, which CLAUDE.md forbids. Caught on self-review before the commit; replaced with one grid and a `viewed` ref.
+  - The edit hook reported hundreds of type errors because the worktree had no `node_modules`, then `PageProps`/`LayoutProps` errors until `next typegen` ran. Environment, not code; fixed with `npm ci` (lockfile only) and `npx next typegen`.
+  - Ran `git checkout master` and `git pull origin master` in this worktree. The checkout failed (`master` is checked out in `D:/repos/prvnietf-cz`), so the pull ran on `feat/lead-api`. Caught by reading the output and the reflog; it was a fast-forward to `origin/master` with no own commits, so no harm.
+  - Chrome wouldn't resize below ~500 px, so the first "390 px" screenshot was the wide layout. Caught on the screenshot; used a 390 px same-origin iframe instead.
+  - Wrote the end-session notes as "Session 04" / `ai-log/04-…` and the decision as D25 without fetching `origin` first; a parallel session had already used all three. Caught by the user; fast-forwarded to `origin/master`, renumbered to Session 05 / D28 and merged STATUS instead of overwriting it.
+- Decisions: D15 stays (no Sheets); existing funnel events; email "Stáhnout PDF" → `/prvni-3-roky-s-etf`, the form → `/dekujeme`; the email address never goes into a URL. Proposed **D28. Guide page separate from the thank-you page**: the form redirects to `/dekujeme`, the email link opens `/prvni-3-roky-s-etf`, and the email address never goes into a URL. Why: the email link keeps working later, and PostHog would record an address in `$pageview`.
+- Full transcript: `ai-log/05-lead-form-handover.md`.
